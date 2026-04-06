@@ -30,7 +30,9 @@
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      cursor: none;
     }
+    @media (hover: none) { body { cursor: auto; } }
 
     /* ── NAV ── */
     nav {
@@ -67,7 +69,7 @@
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 120px 56px 56px;
+      padding: 0 64px 56px;
       position: relative;
       overflow: hidden;
     }
@@ -77,131 +79,138 @@
         linear-gradient(var(--border) 1px, transparent 1px),
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse 120% 100% at 50% 0%, black 30%, transparent 90%);
+      mask-image: radial-gradient(ellipse 140% 80% at 50% 0%, black 40%, transparent 100%);
       pointer-events: none;
     }
-
-    /* 2-column inner */
-    .hero-inner {
-      flex: 1;
-      display: grid;
-      grid-template-columns: 1fr 320px;
-      gap: 48px;
-      align-items: flex-start;
-      padding-top: 48px;
-    }
-
-    /* Left */
-    .hero-left {
+    .hero-topbar {
       display: flex;
-      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 112px;
+      margin-bottom: 12px;
     }
     .hero-tag {
       display: inline-flex; align-items: center; gap: 10px;
       font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--accent);
-      margin-bottom: 28px;
-      opacity: 0; transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.2s;
+      opacity: 0; transform: translateY(12px);
+      animation: fadeUp 0.6s ease forwards 0.1s;
     }
     .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
+    .hero-topbar-right {
+      font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em;
+      opacity: 0; animation: fadeUp 0.5s ease forwards 0.2s;
+    }
+    .hero-name-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 16px 0;
+    }
     .hero-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(80px, 12vw, 180px);
-      line-height: 0.88;
-      letter-spacing: -0.025em;
-      margin-bottom: 36px;
+      font-size: clamp(80px, 15vw, 230px);
+      line-height: 0.86;
+      letter-spacing: -0.04em;
       opacity: 0;
-      animation: clipReveal 1s cubic-bezier(0.16,1,0.3,1) forwards 0.35s;
+      animation: clipReveal 1s cubic-bezier(0.16,1,0.3,1) forwards 0.25s;
     }
     .hero-name .italic { font-style: italic; color: var(--text-muted); }
-    .hero-desc {
-      max-width: 480px; font-size: 18px; color: var(--text-muted);
-      line-height: 1.75; font-weight: 300;
+    .hero-bottombar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 48px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border);
       opacity: 0; transform: translateY(14px);
-      animation: fadeUp 0.7s ease forwards 0.75s;
+      animation: fadeUp 0.7s ease forwards 0.65s;
+    }
+    .hero-desc {
+      max-width: 460px; font-size: 17px; color: var(--text-muted);
+      line-height: 1.8; font-weight: 300;
     }
     .hero-desc strong { color: var(--text); font-weight: 500; }
-
-    /* Right */
-    .hero-right {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      opacity: 0; transform: translateY(16px);
-      animation: fadeUp 0.7s ease forwards 0.5s;
+    .hero-bottom-right {
+      display: flex; flex-direction: column;
+      align-items: flex-end; gap: 18px; flex-shrink: 0;
     }
-    .hero-status-card {
-      border: 1px solid var(--border);
-      padding: 22px 24px;
-      border-radius: 10px;
-      background: rgba(255,255,255,0.03);
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
+    .hero-meta {
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em;
     }
-    .hero-available {
-      display: inline-flex; align-items: center; gap: 8px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase; color: var(--accent);
-    }
-    .hero-available::before {
-      content: ''; width: 6px; height: 6px; border-radius: 50%;
+    .hero-meta-dot {
+      width: 6px; height: 6px; border-radius: 50%;
       background: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
+      animation: heroPulse 2s ease-in-out infinite;
     }
-    @keyframes pulse { 0%,100% { opacity:1; box-shadow: 0 0 0 0 rgba(255,69,0,0.4); } 50% { opacity:0.5; box-shadow: 0 0 0 4px rgba(255,69,0,0); } }
-    .hero-status-divider { height: 1px; background: var(--border); }
-    .hero-status-row { display: flex; flex-direction: column; gap: 3px; }
-    .hero-status-label {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--text-dim);
-    }
-    .hero-status-val { font-size: 13px; color: var(--text); font-weight: 500; line-height: 1.4; }
-
-    /* Mini stats grid */
-    .hero-mini-stats {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
-      border: 1px solid var(--border); border-radius: 10px; overflow: hidden;
-    }
-    .hero-mini-stat {
-      padding: 18px 16px;
-      background: rgba(255,255,255,0.02);
-      display: flex; flex-direction: column; gap: 4px;
-    }
-    .hero-mini-stat:nth-child(odd) { border-right: 1px solid var(--border); }
-    .hero-mini-stat:nth-child(1),
-    .hero-mini-stat:nth-child(2) { border-bottom: 1px solid var(--border); }
-    .hero-mini-num {
-      font-family: 'DM Serif Display', serif;
-      font-size: 26px; color: var(--text);
-      line-height: 1; letter-spacing: -0.02em;
-    }
-    .hero-mini-label { font-size: 11px; color: var(--text-dim); line-height: 1.3; }
-
-    /* Bottom scroll row */
-    .hero-scroll-row {
-      display: flex;
-      justify-content: flex-end;
-      padding-top: 40px;
-      opacity: 0; transform: translateY(10px);
-      animation: fadeUp 0.6s ease forwards 0.9s;
-    }
-    .hero-scroll-indicator {
+    @keyframes heroPulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
+    .hero-scroll {
       display: flex; align-items: center; gap: 14px;
-      color: var(--text-dim); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); font-size: 11px;
+      letter-spacing: 0.12em; text-transform: uppercase;
     }
     .scroll-bar { width: 56px; height: 1px; background: var(--text-dim); overflow: hidden; position: relative; }
     .scroll-bar::after {
       content: ''; position: absolute; top: 0; left: -100%;
-      width: 100%; height: 100%; background: var(--text);
+      width: 100%; height: 100%; background: var(--accent);
       animation: slidein 2.2s ease-in-out infinite;
     }
-
     @keyframes clipReveal {
-      from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(20px); }
+      from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(24px); }
       to   { opacity: 1; clip-path: inset(0 0 0% 0);   transform: translateY(0); }
     }
+
+    /* ── MARQUEE ── */
+    .marquee-wrap {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--bg-2);
+      overflow: hidden;
+      padding: 18px 0;
+    }
+    .marquee-inner {
+      display: flex;
+      animation: marqueeAnim 30s linear infinite;
+      width: max-content;
+      will-change: transform;
+    }
+    .marquee-item {
+      padding: 0 40px;
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase;
+      color: var(--text-dim); white-space: nowrap;
+    }
+    .marquee-item.accent { color: var(--accent); }
+    .marquee-sep { color: var(--accent); opacity: 0.4; align-self: center; }
+    @keyframes marqueeAnim {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ── CUSTOM CURSOR ── */
+    .c-dot {
+      position: fixed; top: 0; left: 0;
+      width: 8px; height: 8px;
+      background: var(--accent); border-radius: 50%;
+      pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%);
+    }
+    .c-ring {
+      position: fixed; top: 0; left: 0;
+      width: 34px; height: 34px;
+      border: 1px solid rgba(255,69,0,0.4);
+      border-radius: 50%;
+      pointer-events: none; z-index: 9998;
+      transform: translate(-50%, -50%);
+      transition: width 0.25s, height 0.25s, border-color 0.25s, opacity 0.25s;
+    }
+    .c-ring.hovering {
+      width: 56px; height: 56px;
+      border-color: rgba(255,69,0,0.7);
+    }
+    @media (hover: none) { .c-dot, .c-ring { display: none; } }
 
     /* ── METRICS STRIP ── */
     .metrics-strip {
@@ -537,9 +546,11 @@
     @media (max-width: 900px) {
       nav { padding: 20px 24px; }
       .hero { padding: 100px 24px 48px; }
-      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
-      .hero-right { display: none; }
-      .hero-scroll-row { justify-content: flex-start; }
+      .hero { padding: 0 28px 48px; }
+      .hero-topbar { padding-top: 96px; }
+      .hero-topbar-right { display: none; }
+      .hero-bottombar { flex-direction: column; align-items: flex-start; gap: 24px; }
+      .hero-bottom-right { align-items: flex-start; }
       .metrics-strip { grid-template-columns: repeat(2, 1fr); }
       .metric:nth-child(2),
       .metric:nth-child(4),
@@ -783,65 +794,63 @@
 <section class="hero">
   <div class="hero-grid-bg"></div>
 
-  <div class="hero-inner">
-    <!-- 좌측: 이름 + 설명 -->
-    <div class="hero-left">
-      <div class="hero-tag">Growth Marketer × AI Builder</div>
-      <h1 class="hero-name">Jaeho<br><span class="italic">Jung.</span></h1>
-      <p class="hero-desc">
-        <strong>1인 마케터로 팀의 성과를 냅니다.</strong><br>
-        AI 자동화로 반복 업무를 없애고, 직접 만든 도구로<br>
-        데이터를 분석하며, 전략부터 실행까지 혼자 담당합니다.
-      </p>
-    </div>
-
-    <!-- 우측: 현황 카드 + 스탯 -->
-    <div class="hero-right">
-      <div class="hero-status-card">
-        <div class="hero-available">Actively seeking opportunities</div>
-        <div class="hero-status-divider"></div>
-        <div class="hero-status-row">
-          <span class="hero-status-label">현재 재직</span>
-          <span class="hero-status-val">RNR · MONOPLEX</span>
-        </div>
-        <div class="hero-status-row">
-          <span class="hero-status-label">포지션</span>
-          <span class="hero-status-val">AI-driven Growth Marketing Lead</span>
-        </div>
-        <div class="hero-status-row">
-          <span class="hero-status-label">연락</span>
-          <span class="hero-status-val">jjhtv@kakao.com</span>
-        </div>
-      </div>
-
-      <div class="hero-mini-stats">
-        <div class="hero-mini-stat">
-          <span class="hero-mini-num">8+</span>
-          <span class="hero-mini-label">핵심 프로젝트</span>
-        </div>
-        <div class="hero-mini-stat">
-          <span class="hero-mini-num">95%</span>
-          <span class="hero-mini-label">반복업무 자동화</span>
-        </div>
-        <div class="hero-mini-stat">
-          <span class="hero-mini-num">220만</span>
-          <span class="hero-mini-label">바이럴 도달</span>
-        </div>
-        <div class="hero-mini-stat">
-          <span class="hero-mini-num">2.8×</span>
-          <span class="hero-mini-label">전환율 상승</span>
-        </div>
-      </div>
-    </div>
+  <!-- Top bar -->
+  <div class="hero-topbar">
+    <div class="hero-tag">Growth Marketer × AI Builder</div>
+    <div class="hero-topbar-right">RNR · MONOPLEX — 마케팅 전담</div>
   </div>
 
-  <div class="hero-scroll-row">
-    <div class="hero-scroll-indicator">
-      <div class="scroll-bar"></div>
-      Scroll to explore
+  <!-- Name -->
+  <div class="hero-name-wrap">
+    <h1 class="hero-name">Jaeho<br><span class="italic">Jung.</span></h1>
+  </div>
+
+  <!-- Bottom bar -->
+  <div class="hero-bottombar">
+    <p class="hero-desc">
+      <strong>1인 마케터로 팀의 성과를 냅니다.</strong><br>
+      AI 자동화로 반복 업무를 없애고, 직접 만든 도구로<br>
+      데이터를 분석하며, 전략부터 실행까지 혼자 담당합니다.
+    </p>
+    <div class="hero-bottom-right">
+      <div class="hero-meta">
+        <span class="hero-meta-dot"></span>
+        Actively seeking · jjhtv@kakao.com
+      </div>
+      <div class="hero-scroll">
+        <div class="scroll-bar"></div>
+        Scroll to explore
+      </div>
     </div>
   </div>
 </section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-inner">
+    <span class="marquee-item">AI Marketer</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">Garnet Developer</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Growth Hacker</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">220만 도달</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">Claude Code</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Multi-Agent</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Data-Driven</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">95% 자동화</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">CRM Strategy</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Viral Campaign</span><span class="marquee-sep">✦</span>
+    <!-- repeat for seamless loop -->
+    <span class="marquee-item">AI Marketer</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">Garnet Developer</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Growth Hacker</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">220만 도달</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">Claude Code</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Multi-Agent</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Data-Driven</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item accent">95% 자동화</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">CRM Strategy</span><span class="marquee-sep">✦</span>
+    <span class="marquee-item">Viral Campaign</span><span class="marquee-sep">✦</span>
+  </div>
+</div>
 
 <!-- METRICS STRIP -->
 <div class="metrics-strip" id="metrics">
@@ -1327,7 +1336,33 @@
   <span>AI-driven Growth Marketing Lead</span>
 </footer>
 
+<!-- Custom Cursor -->
+<div class="c-dot" id="cDot"></div>
+<div class="c-ring" id="cRing"></div>
+
 <script>
+  // Custom cursor
+  (function() {
+    const dot = document.getElementById('cDot');
+    const ring = document.getElementById('cRing');
+    if (!dot || !ring) return;
+    let mx = -100, my = -100, rx = -100, ry = -100;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    document.querySelectorAll('a, button, [data-gtab]').forEach(el => {
+      el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
+      el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
+    });
+    (function loop() {
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      dot.style.left = mx + 'px';
+      dot.style.top  = my + 'px';
+      ring.style.left = rx + 'px';
+      ring.style.top  = ry + 'px';
+      requestAnimationFrame(loop);
+    })();
+  })();
+
   // Nav scroll + active section highlight
   const nav = document.getElementById('nav');
   const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
