@@ -9,16 +9,17 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #141210;
-      --bg-2: #1c1916;
-      --bg-3: #24201c;
-      --text: #f0ede8;
-      --text-muted: #c4bfb7;
-      --text-dim: #908c84;
-      --accent: #ff4500;
-      --accent-dim: rgba(255, 69, 0, 0.1);
-      --border: rgba(240, 237, 232, 0.08);
-      --border-hover: rgba(240, 237, 232, 0.18);
+      --bg: #111009;
+      --bg-2: #1a1814;
+      --bg-3: #22201b;
+      --text: #f2ede7;
+      --text-muted: #c0bab1;
+      --text-dim: #8a8680;
+      --accent: #e8430a;
+      --accent-warm: rgba(232,67,10,0.08);
+      --accent-dim: rgba(232,67,10,0.12);
+      --border: rgba(242,237,231,0.07);
+      --border-hover: rgba(242,237,231,0.16);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
@@ -33,6 +34,16 @@
       cursor: none;
     }
     @media (hover: none) { body { cursor: auto; } }
+
+    /* Film grain */
+    body::after {
+      content: '';
+      position: fixed; inset: 0; z-index: 99997;
+      pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size: 200px;
+      opacity: 0.028;
+    }
 
     /* ── NAV ── */
     nav {
@@ -80,6 +91,14 @@
         linear-gradient(90deg, var(--border) 1px, transparent 1px);
       background-size: 72px 72px;
       mask-image: radial-gradient(ellipse 140% 80% at 50% 0%, black 40%, transparent 100%);
+      pointer-events: none;
+    }
+    /* Warm amber glow */
+    .hero::after {
+      content: '';
+      position: absolute; top: -15vh; right: -5vw;
+      width: 75vw; height: 90vh;
+      background: radial-gradient(ellipse at 55% 35%, rgba(232,67,10,0.07) 0%, transparent 60%);
       pointer-events: none;
     }
     .hero-topbar {
@@ -214,39 +233,61 @@
 
     /* ── METRICS STRIP ── */
     .metrics-strip {
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
       display: grid;
       grid-template-columns: repeat(3, 1fr);
+      border-top: 1px solid var(--border);
     }
     .metric {
-      padding: 52px 48px;
+      padding: 64px 52px;
       border-right: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+      transition: background 0.3s;
     }
+    .metric:hover { background: var(--bg-2); }
     .metric:nth-child(3),
     .metric:nth-child(6) { border-right: none; }
     .metric:nth-child(4),
     .metric:nth-child(5),
     .metric:nth-child(6) { border-bottom: none; }
+    /* Ambient number */
+    .metric::before {
+      content: attr(data-index);
+      position: absolute; top: 20px; right: 24px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 11px; color: var(--text-dim);
+      letter-spacing: 0.14em; font-style: italic;
+    }
     .metric-num {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(44px, 5vw, 64px);
-      line-height: 1; color: var(--text); margin-bottom: 12px;
-      letter-spacing: -0.02em;
+      font-size: clamp(52px, 6vw, 80px);
+      line-height: 0.95; color: var(--text); margin-bottom: 16px;
+      letter-spacing: -0.03em;
     }
     .metric-num .accent { color: var(--accent); }
-    .metric-desc { font-size: 13px; color: var(--text-muted); line-height: 1.5; }
-    .metric-source { font-size: 11px; color: var(--text-dim); margin-top: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+    .metric-desc { font-size: 15px; color: var(--text-muted); line-height: 1.5; font-weight: 400; }
+    .metric-source { font-size: 10px; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
 
     /* ── SECTION BASE ── */
     .section-eyebrow {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.22em;
-      text-transform: uppercase; color: var(--text-muted);
+      font-size: 9px; font-weight: 700; letter-spacing: 0.26em;
+      text-transform: uppercase; color: var(--text-dim);
     }
     .divider {
       height: 1px; background: var(--border); margin: 0;
     }
+    /* Editorial headline — big italic statement */
+    .editorial-hl {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 4.5vw, 60px);
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--text-muted);
+      letter-spacing: -0.02em;
+      margin: 32px 0 0;
+    }
+    .editorial-hl strong { color: var(--text); font-style: normal; }
 
     /* ── STORY ── */
     .story {
@@ -284,9 +325,9 @@
     .story-main {}
     .story-headline {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(30px, 3.5vw, 46px);
-      line-height: 1.15; color: var(--text);
-      margin-bottom: 40px; letter-spacing: -0.01em;
+      font-size: clamp(36px, 4.2vw, 58px);
+      line-height: 1.1; color: var(--text);
+      margin-bottom: 40px; letter-spacing: -0.02em;
     }
     .story-headline em { font-style: italic; color: var(--text-muted); }
     .story-body { max-width: 600px; }
@@ -466,19 +507,20 @@
     .vision-left {}
     .vision-headline {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(36px, 4.5vw, 58px);
-      line-height: 1.05; color: var(--text); margin-top: 32px;
-      letter-spacing: -0.02em;
+      font-size: clamp(40px, 5.5vw, 76px);
+      line-height: 1.0; color: var(--text); margin-top: 32px;
+      letter-spacing: -0.03em;
     }
     .vision-headline em { font-style: italic; color: var(--text-muted); }
     .vision-right { padding-top: 48px; }
     .vision-quote {
       font-family: 'DM Serif Display', serif;
-      font-size: 20px; font-style: italic;
-      color: var(--text-muted); line-height: 1.6;
+      font-size: clamp(18px, 2vw, 24px); font-style: italic;
+      color: var(--text); line-height: 1.65;
       border-left: 2px solid var(--accent); padding-left: 28px;
       margin-bottom: 40px;
     }
+    .vision-quote em { color: var(--accent); font-style: italic; }
     .vision-list { display: flex; flex-direction: column; gap: 20px; }
     .vision-item { display: flex; gap: 20px; align-items: flex-start; }
     .vision-num {
@@ -854,32 +896,32 @@
 
 <!-- METRICS STRIP -->
 <div class="metrics-strip" id="metrics">
-  <div class="metric reveal">
+  <div class="metric reveal" data-index="01">
     <div class="metric-num"><span class="counter" data-target="90">0</span><span class="accent">%+</span></div>
     <div class="metric-desc">재방문율 달성</div>
     <div class="metric-source">CRM · 콘텐츠 전략</div>
   </div>
-  <div class="metric reveal reveal-d1">
+  <div class="metric reveal reveal-d1" data-index="02">
     <div class="metric-num"><span class="counter" data-target="95">0</span><span class="accent">%</span></div>
     <div class="metric-desc">반복업무 자동화 단축</div>
     <div class="metric-source">AI · Zapier · Garnet</div>
   </div>
-  <div class="metric reveal reveal-d2">
+  <div class="metric reveal reveal-d2" data-index="03">
     <div class="metric-num"><span class="counter" data-target="2" data-decimal="true">0</span><span class="accent">.8×</span></div>
     <div class="metric-desc">전환율 상승</div>
     <div class="metric-source">카카오 채널 리브랜딩</div>
   </div>
-  <div class="metric reveal reveal-d3">
+  <div class="metric reveal reveal-d3" data-index="04">
     <div class="metric-num"><span class="counter" data-target="220">0</span><span class="accent">만</span></div>
     <div class="metric-desc">바이럴 캠페인 도달</div>
     <div class="metric-source">NONOL 캠페인</div>
   </div>
-  <div class="metric reveal reveal-d4">
+  <div class="metric reveal reveal-d4" data-index="05">
     <div class="metric-num"><span class="counter" data-target="300">0</span><span class="accent">%</span></div>
     <div class="metric-desc">B2B 대관 매출 성장</div>
     <div class="metric-source">월 3건 → 15건</div>
   </div>
-  <div class="metric reveal reveal-d5">
+  <div class="metric reveal reveal-d5" data-index="06">
     <div class="metric-num"><span class="counter" data-target="200">0</span><span class="accent">%+</span></div>
     <div class="metric-desc">홈페이지 방문자 증가</div>
     <div class="metric-source">UX 전면 개편</div>
@@ -892,6 +934,7 @@
     <span class="section-eyebrow">Selected Projects</span>
     <span class="projects-count">08 Works</span>
   </div>
+  <p class="editorial-hl reveal">숫자가 증명하는 일들.<br><strong>전략부터 도구 제작까지.</strong></p>
 
   <!-- Featured: Garnet -->
   <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="proj-featured reveal">
@@ -1280,8 +1323,8 @@
   </div>
   <div class="vision-right">
     <blockquote class="vision-quote reveal">
-      "AI를 쓰는 마케터와 AI로 만드는 마케터는<br>
-      다릅니다. 저는 후자가 되려 합니다."
+      "AI를 <em>쓰는</em> 마케터와<br>AI로 <em>만드는</em> 마케터는 다릅니다.<br>
+      저는 후자입니다."
     </blockquote>
     <div class="vision-list">
       <div class="vision-item reveal">
