@@ -13,8 +13,8 @@
       --bg-2: #1c1916;
       --bg-3: #24201c;
       --text: #f0ede8;
-      --text-muted: #908c84;
-      --text-dim: #72706a;
+      --text-muted: #c4bfb7;
+      --text-dim: #908c84;
       --accent: #ff4500;
       --accent-dim: rgba(255, 69, 0, 0.1);
       --border: rgba(240, 237, 232, 0.08);
@@ -107,8 +107,8 @@
     .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
     .hero-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(64px, 9vw, 130px);
-      line-height: 0.92;
+      font-size: clamp(80px, 12vw, 180px);
+      line-height: 0.88;
       letter-spacing: -0.025em;
       margin-bottom: 36px;
       opacity: 0;
@@ -116,8 +116,8 @@
     }
     .hero-name .italic { font-style: italic; color: var(--text-muted); }
     .hero-desc {
-      max-width: 480px; font-size: 16px; color: var(--text-muted);
-      line-height: 1.8; font-weight: 300;
+      max-width: 480px; font-size: 18px; color: var(--text-muted);
+      line-height: 1.75; font-weight: 300;
       opacity: 0; transform: translateY(14px);
       animation: fadeUp 0.7s ease forwards 0.75s;
     }
@@ -282,7 +282,7 @@
     .story-headline em { font-style: italic; color: var(--text-muted); }
     .story-body { max-width: 600px; }
     .story-body p {
-      font-size: 15px; color: var(--text-muted); line-height: 1.85;
+      font-size: 17px; color: var(--text-muted); line-height: 1.85;
       font-weight: 300; word-break: keep-all;
     }
     .story-body p + p { margin-top: 28px; }
@@ -422,12 +422,12 @@
     }
     .proj-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(20px, 2vw, 26px);
+      font-size: clamp(26px, 2.8vw, 40px);
       color: var(--text); margin-bottom: 14px;
       line-height: 1.15; letter-spacing: -0.01em;
     }
     .proj-desc {
-      font-size: 13px; color: var(--text-muted);
+      font-size: 15px; color: var(--text-muted);
       line-height: 1.75; font-weight: 300; margin-bottom: 28px;
     }
     .proj-stats { display: flex; gap: 24px; }
@@ -476,7 +476,7 @@
       font-size: 11px; font-weight: 700; color: var(--accent);
       letter-spacing: 0.1em; min-width: 28px; padding-top: 3px;
     }
-    .vision-text { font-size: 15px; color: var(--text-muted); line-height: 1.65; font-weight: 300; }
+    .vision-text { font-size: 16px; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
     .vision-text strong { color: var(--text); font-weight: 500; }
 
     /* ── CONTACT ── */
@@ -567,7 +567,7 @@
       .metric { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
       .metric:last-child { border-bottom: none !important; }
       .skills-grid { grid-template-columns: 1fr; }
-      .hero-name { font-size: clamp(52px, 14vw, 80px); }
+      .hero-name { font-size: clamp(60px, 16vw, 96px); }
     }
 
     /* ── GARNET MOCKUP ── */
