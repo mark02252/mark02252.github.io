@@ -573,10 +573,11 @@
     @keyframes slidein {
       0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
     }
+    /* GSAP handles reveal animations — no CSS opacity:0 needed */
     .reveal {
-      opacity: 0; transform: translateY(48px);
+      opacity: 1; transform: none;
     }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.visible { opacity: 1; transform: none; }
 
     /* 3D tilt for project cards */
     .proj-card, .proj-featured { transform-style: preserve-3d; perspective: 800px; }
@@ -1400,11 +1401,18 @@
 <div class="c-dot" id="cDot"></div>
 <div class="c-ring" id="cRing"></div>
 
-<!-- GSAP + Plugins -->
+<!-- GSAP + Plugins (load before main script) -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
+<!-- Fallback: if GSAP fails to load, show all content -->
+<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 <script>
+if (typeof gsap === 'undefined') {
+  // GSAP failed to load — make everything visible
+  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
+} else {
+
 gsap.registerPlugin(ScrollTrigger);
 
 // ── Custom Cursor (unchanged) ──
@@ -1888,6 +1896,8 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     }
   });
 });
+
+} // end GSAP check
 </script>
 </body>
 </html>
