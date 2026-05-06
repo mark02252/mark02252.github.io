@@ -3,837 +3,423 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>정재호 — AI-driven Growth Marketer</title>
+  <title>정재호 — Growth Marketer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0d0c10;
-      --bg-2: #14121a;
-      --bg-3: #1c1a24;
-      --text: #f0edf8;
-      --text-muted: #b8b3cc;
-      --text-dim: #7a748e;
-      --accent: #8b5cf6;
-      --accent-warm: rgba(139,92,246,0.08);
-      --accent-dim: rgba(139,92,246,0.14);
-      --border: rgba(240,237,248,0.07);
-      --border-hover: rgba(240,237,248,0.16);
+      --bg: #FAFAF7;
+      --bg-warm: #F4F3EF;
+      --bg-card: #FFFFFF;
+      --text: #1a1a1a;
+      --text-sub: #555555;
+      --text-dim: #999999;
+      --accent: #1a1a1a;
+      --accent-soft: rgba(26,26,26,0.06);
+      --border: rgba(0,0,0,0.08);
+      --border-hover: rgba(0,0,0,0.16);
     }
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: auto; /* GSAP handles smooth scrolling */ }
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
+      font-family: 'Inter', -apple-system, sans-serif;
       font-size: 16px;
       line-height: 1.6;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
-      cursor: none;
-    }
-    @media (hover: none) { body { cursor: auto; } }
-
-    /* Film grain */
-    body::after {
-      content: '';
-      position: fixed; inset: 0; z-index: 99997;
-      pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)'/%3E%3C/svg%3E");
-      background-size: 200px;
-      opacity: 0.028;
     }
 
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       display: flex; justify-content: space-between; align-items: center;
-      padding: 24px 56px;
-      transition: background 0.3s, backdrop-filter 0.3s, border-color 0.3s;
-      border-bottom: 1px solid transparent;
+      padding: 20px 48px;
+      transition: background 0.3s, backdrop-filter 0.3s;
     }
     nav.scrolled {
-      background: rgba(20,18,16,0.92);
-      backdrop-filter: blur(16px);
-      border-bottom-color: var(--border);
+      background: rgba(250,250,247,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
     }
-    .nav-logo { font-size: 14px; font-weight: 600; color: var(--text); text-decoration: none; letter-spacing: 0.02em; }
-    .nav-links { display: flex; gap: 36px; align-items: center; }
-    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 13px; transition: color 0.2s; position: relative; }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links a.active { color: var(--text); }
-    .nav-links a.active::after {
-      content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
-      height: 1px; background: var(--accent);
+    .nav-logo {
+      font-family: 'DM Serif Display', serif;
+      font-size: 18px; color: var(--text);
+      text-decoration: none;
     }
+    .nav-links { display: flex; gap: 32px; align-items: center; }
+    .nav-links a {
+      color: var(--text-sub); text-decoration: none;
+      font-size: 13px; font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--text); }
     .nav-cta {
-      color: var(--text) !important;
-      border: 1px solid var(--border-hover) !important;
-      padding: 9px 22px; border-radius: 6px;
-      transition: background 0.2s, border-color 0.2s !important;
+      color: var(--bg) !important;
+      background: var(--text) !important;
+      padding: 8px 20px; border-radius: 100px;
+      font-size: 13px !important; font-weight: 500 !important;
+      transition: opacity 0.2s !important;
     }
-    .nav-cta:hover { background: var(--bg-3) !important; }
+    .nav-cta:hover { opacity: 0.8 !important; }
 
     /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex;
       flex-direction: column;
-      padding: 0 64px 56px;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-grid-bg {
-      position: absolute; inset: 0;
-      background-image:
-        linear-gradient(var(--border) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border) 1px, transparent 1px);
-      background-size: 72px 72px;
-      mask-image: radial-gradient(ellipse 140% 80% at 50% 0%, black 40%, transparent 100%);
-      pointer-events: none;
-    }
-    /* Violet ambient glow */
-    .hero::after {
-      content: '';
-      position: absolute; top: -15vh; right: -5vw;
-      width: 75vw; height: 90vh;
-      background: radial-gradient(ellipse at 55% 35%, rgba(139,92,246,0.08) 0%, transparent 60%);
-      pointer-events: none;
-    }
-    .hero-topbar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 112px;
-      margin-bottom: 12px;
+      justify-content: center;
+      padding: 120px 48px 80px;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     .hero-tag {
-      display: inline-flex; align-items: center; gap: 10px;
-      font-size: 11px; font-weight: 600; letter-spacing: 0.18em;
-      text-transform: uppercase; color: var(--accent);
-      opacity: 0; transform: translateY(12px);
-      animation: fadeUp 0.6s ease forwards 0.1s;
-    }
-    .hero-tag::before { content: ''; width: 24px; height: 1px; background: var(--accent); }
-    .hero-topbar-right {
-      font-size: 11px; color: var(--text-dim); letter-spacing: 0.08em;
-      opacity: 0; animation: fadeUp 0.5s ease forwards 0.2s;
-    }
-    .hero-name-wrap {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding: 16px 0;
+      font-size: 12px; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 24px;
     }
     .hero-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(80px, 15vw, 230px);
-      line-height: 0.86;
-      letter-spacing: -0.04em;
-      opacity: 0;
-      animation: clipReveal 1s cubic-bezier(0.16,1,0.3,1) forwards 0.25s;
+      font-size: clamp(48px, 8vw, 96px);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      margin-bottom: 32px;
     }
-    .hero-name .italic { font-style: italic; color: var(--text-muted); }
-    .hero-bottombar {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      gap: 48px;
-      padding-top: 40px;
-      border-top: 1px solid var(--border);
-      opacity: 0; transform: translateY(14px);
-      animation: fadeUp 0.7s ease forwards 0.65s;
-    }
+    .hero-name em { font-style: italic; color: var(--text-sub); }
     .hero-desc {
-      max-width: 460px; font-size: 17px; color: var(--text-muted);
-      line-height: 1.8; font-weight: 300;
+      max-width: 520px;
+      font-size: 18px; line-height: 1.8;
+      color: var(--text-sub); font-weight: 300;
     }
     .hero-desc strong { color: var(--text); font-weight: 500; }
-    .hero-bottom-right {
-      display: flex; flex-direction: column;
-      align-items: flex-end; gap: 18px; flex-shrink: 0;
-    }
-    .hero-meta {
-      display: flex; align-items: center; gap: 8px;
-      font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em;
-    }
-    .hero-meta-dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--accent);
-      animation: heroPulse 2s ease-in-out infinite;
-    }
-    @keyframes heroPulse { 0%,100%{opacity:1;} 50%{opacity:0.35;} }
-    .hero-scroll {
-      display: flex; align-items: center; gap: 14px;
-      color: var(--text-dim); font-size: 11px;
-      letter-spacing: 0.12em; text-transform: uppercase;
-    }
-    .scroll-bar { width: 56px; height: 1px; background: var(--text-dim); overflow: hidden; position: relative; }
-    .scroll-bar::after {
-      content: ''; position: absolute; top: 0; left: -100%;
-      width: 100%; height: 100%; background: var(--accent);
-      animation: slidein 2.2s ease-in-out infinite;
-    }
-    @keyframes clipReveal {
-      from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translateY(24px); }
-      to   { opacity: 1; clip-path: inset(0 0 0% 0);   transform: translateY(0); }
-    }
-
-    /* ── MARQUEE ── */
-    .marquee-wrap {
+    .hero-bottom {
+      display: flex; justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 64px; padding-top: 24px;
       border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
-      background: var(--bg-2);
-      overflow: hidden;
-      padding: 18px 0;
     }
-    .marquee-inner {
-      display: flex;
-      animation: marqueeAnim 30s linear infinite;
-      width: max-content;
-      will-change: transform;
-    }
-    .marquee-item {
-      padding: 0 40px;
-      font-size: 11px; font-weight: 700;
-      letter-spacing: 0.22em; text-transform: uppercase;
-      color: var(--text-dim); white-space: nowrap;
-    }
-    .marquee-item.accent { color: var(--accent); }
-    .marquee-sep { color: var(--accent); opacity: 0.4; align-self: center; }
-    @keyframes marqueeAnim {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
+    .hero-meta { font-size: 13px; color: var(--text-dim); }
+    .hero-scroll {
+      font-size: 12px; color: var(--text-dim);
+      letter-spacing: 0.1em; text-transform: uppercase;
     }
 
-    /* ── CUSTOM CURSOR ── */
-    .c-dot {
-      position: fixed; top: 0; left: 0;
-      width: 8px; height: 8px;
-      background: var(--accent); border-radius: 50%;
-      pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%);
-    }
-    .c-ring {
-      position: fixed; top: 0; left: 0;
-      width: 34px; height: 34px;
-      border: 1px solid rgba(255,69,0,0.4);
-      border-radius: 50%;
-      pointer-events: none; z-index: 9998;
-      transform: translate(-50%, -50%);
-      transition: width 0.25s, height 0.25s, border-color 0.25s, opacity 0.25s;
-    }
-    .c-ring.hovering {
-      width: 56px; height: 56px;
-      border-color: rgba(255,69,0,0.7);
-    }
-    @media (hover: none) { .c-dot, .c-ring { display: none; } }
-
-    /* ── METRICS STRIP ── */
-    .metrics-strip {
+    /* ── METRICS ── */
+    .metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       border-top: 1px solid var(--border);
+      max-width: 1200px; margin: 0 auto;
     }
     .metric {
-      padding: 64px 52px;
-      border-right: 1px solid var(--border);
+      padding: 56px 48px;
       border-bottom: 1px solid var(--border);
-      position: relative;
-      overflow: hidden;
-      transition: background 0.3s;
+      border-right: 1px solid var(--border);
     }
-    .metric:hover { background: var(--bg-2); }
-    .metric:nth-child(3),
-    .metric:nth-child(6) { border-right: none; }
-    .metric:nth-child(4),
-    .metric:nth-child(5),
-    .metric:nth-child(6) { border-bottom: none; }
-    /* Ambient number */
-    .metric::before {
-      content: attr(data-index);
-      position: absolute; top: 20px; right: 24px;
-      font-family: 'DM Serif Display', serif;
-      font-size: 11px; color: var(--text-dim);
-      letter-spacing: 0.14em; font-style: italic;
-    }
+    .metric:nth-child(3n) { border-right: none; }
     .metric-num {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(52px, 6vw, 80px);
-      line-height: 0.95; color: var(--text); margin-bottom: 16px;
-      letter-spacing: -0.03em;
+      font-size: clamp(40px, 5vw, 64px);
+      line-height: 1; color: var(--text);
+      margin-bottom: 12px;
     }
-    .metric-num .accent { color: var(--accent); }
-    .metric-desc { font-size: 15px; color: var(--text-muted); line-height: 1.5; font-weight: 400; }
-    .metric-source { font-size: 10px; color: var(--text-dim); margin-top: 8px; letter-spacing: 0.1em; text-transform: uppercase; }
+    .metric-desc { font-size: 15px; color: var(--text-sub); font-weight: 400; }
+    .metric-source { font-size: 11px; color: var(--text-dim); margin-top: 6px; letter-spacing: 0.06em; }
 
-    /* ── SECTION BASE ── */
-    .section-eyebrow {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.26em;
-      text-transform: uppercase; color: var(--text-dim);
+    /* ── SECTION COMMON ── */
+    .section { max-width: 1200px; margin: 0 auto; padding: 100px 48px; }
+    .section-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.2em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 16px;
     }
-    .divider {
-      height: 1px; background: var(--border); margin: 0;
-    }
-    /* Editorial headline — big italic statement */
-    .editorial-hl {
+    .section-title {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(32px, 4.5vw, 60px);
-      font-style: italic;
-      line-height: 1.1;
-      color: var(--text-muted);
-      letter-spacing: -0.02em;
-      margin: 32px 0 0;
+      font-size: clamp(32px, 4vw, 52px);
+      line-height: 1.15; color: var(--text);
+      margin-bottom: 48px; letter-spacing: -0.02em;
     }
-    .editorial-hl strong { color: var(--text); font-style: normal; }
-
-    /* ── STORY ── */
-    .story {
-      padding: 120px 56px;
-      display: grid;
-      grid-template-columns: 280px 1fr;
-      gap: 80px;
-    }
-    .story-sidebar {}
-    .story-sidebar .section-eyebrow { margin-bottom: 40px; display: block; }
-    .timeline { display: flex; flex-direction: column; gap: 0; }
-    .timeline-item {
-      display: flex; gap: 20px;
-      padding-bottom: 36px;
-      position: relative;
-    }
-    .timeline-item:not(:last-child)::after {
-      content: '';
-      position: absolute;
-      left: 3px; top: 24px;
-      width: 1px; height: calc(100% - 12px);
-      background: var(--border);
-    }
-    .timeline-dot {
-      width: 7px; height: 7px; border-radius: 50%;
-      background: var(--text-muted); flex-shrink: 0; margin-top: 6px;
-      transition: background 0.2s;
-    }
-    .timeline-item.current .timeline-dot { background: var(--accent); }
-    .timeline-body {}
-    .timeline-period { font-size: 11px; color: var(--text-muted); letter-spacing: 0.08em; margin-bottom: 5px; }
-    .timeline-role { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 3px; }
-    .timeline-company { font-size: 13px; color: var(--text-muted); }
-
-    .story-main {}
-    .story-headline {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(36px, 4.2vw, 58px);
-      line-height: 1.1; color: var(--text);
-      margin-bottom: 40px; letter-spacing: -0.02em;
-    }
-    .story-headline em { font-style: italic; color: var(--text-muted); }
-    .story-body { max-width: 600px; }
-    .story-body p {
-      font-size: 17px; color: var(--text-muted); line-height: 1.85;
-      font-weight: 300; word-break: keep-all;
-    }
-    .story-body p + p { margin-top: 28px; }
-    .story-body strong { color: var(--text); font-weight: 500; }
-    .story-highlight {
-      margin-top: 36px;
-      padding: 20px 24px;
-      border-left: 2px solid var(--accent);
-      background: rgba(255,69,0,0.05);
-      border-radius: 0 6px 6px 0;
-    }
-    .story-highlight p {
-      font-size: 14px; color: var(--text-muted); line-height: 1.7;
-      font-weight: 300; word-break: keep-all;
-    }
-    .story-highlight strong { color: var(--text); font-weight: 500; }
-
-    /* ── SKILLS ── */
-    .skills { padding: 80px 56px; background: var(--bg-2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-    .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 48px; margin-top: 48px; }
-    .skill-group {}
-    .skill-group-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 20px; display: block;
-    }
-    .skill-list { display: flex; flex-direction: column; gap: 10px; }
-    .skill-item {
-      display: flex; align-items: center; gap: 10px;
-      font-size: 14px; color: var(--text-muted);
-    }
-    .skill-item::before {
-      content: ''; width: 4px; height: 4px; border-radius: 50%;
-      background: var(--text-dim); flex-shrink: 0;
-    }
-
-    /* ── PROJECT ROLE BADGE ── */
-    .proj-header {
-      display: flex; justify-content: space-between; align-items: flex-start;
-      margin-bottom: 16px; gap: 8px;
-    }
-    .proj-tag { margin-bottom: 0 !important; }
-    .proj-role {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--text-dim);
-      border: 1px solid var(--border); padding: 4px 10px;
-      border-radius: 100px; white-space: nowrap; flex-shrink: 0;
-    }
-    .proj-role.solo { color: var(--accent); border-color: rgba(255,69,0,0.3); background: rgba(255,69,0,0.06); }
+    .section-title em { font-style: italic; color: var(--text-sub); }
+    .divider { height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
 
     /* ── PROJECTS ── */
-    .projects { padding: 80px 56px 120px; }
-    .projects-header {
-      display: flex; justify-content: space-between; align-items: baseline;
-      padding-bottom: 24px; border-bottom: 1px solid var(--border); margin-bottom: 4px;
-    }
-    .projects-count { font-size: 11px; color: var(--text-dim); letter-spacing: 0.06em; }
-
-    /* Featured wide card */
     .proj-featured {
       display: grid; grid-template-columns: 1fr 1fr;
-      background: var(--bg-2); border: 1px solid var(--border);
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      overflow: hidden;
       text-decoration: none; color: inherit;
-      transition: background 0.25s, border-color 0.25s;
-      position: relative; overflow: hidden;
+      transition: border-color 0.3s, box-shadow 0.3s;
+      margin-bottom: 24px;
     }
-    .proj-featured::before {
-      content: ''; position: absolute; top: 0; left: 0;
-      width: 0; height: 3px; background: var(--accent);
-      transition: width 0.4s ease;
+    .proj-featured:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 12px 40px rgba(0,0,0,0.06);
     }
-    .proj-featured:hover { background: var(--bg-3); border-color: var(--border-hover); }
-    .proj-featured:hover::before { width: 100%; }
-
-    .proj-featured-text { padding: 64px 56px; }
+    .proj-featured-text { padding: 56px 48px; }
     .proj-featured-visual {
-      background: var(--bg-3); border-left: 1px solid var(--border);
+      background: var(--bg-warm);
       display: flex; align-items: center; justify-content: center;
       min-height: 320px; position: relative; overflow: hidden;
     }
-    .proj-vis-text {
-      font-family: 'DM Serif Display', serif;
-      font-size: 180px; color: rgba(240,237,232,0.05);
-      user-select: none; letter-spacing: -0.05em; line-height: 1;
-      position: absolute;
-    }
-    /* subtle dot grid inside visual panel */
-    .proj-featured-visual::before {
-      content: '';
-      position: absolute; inset: 0;
-      background-image: radial-gradient(circle, rgba(240,237,232,0.07) 1px, transparent 1px);
-      background-size: 24px 24px;
-      mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 30%, transparent 100%);
-    }
-    .proj-vis-badge {
-      position: absolute; bottom: 28px; right: 28px;
-      font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
-      color: var(--accent); text-transform: uppercase;
-      border: 1px solid rgba(255,69,0,0.3); padding: 8px 14px; border-radius: 4px;
-      background: rgba(255,69,0,0.06);
-    }
 
-    /* Grid of regular cards */
-    .proj-grid {
-      display: grid; grid-template-columns: repeat(3, 1fr);
-      border-top: none;
-    }
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
     .proj-grid-2col { grid-template-columns: repeat(2, 1fr); }
     .proj-card {
-      padding: 48px 40px;
-      border: 1px solid var(--border); border-top: none;
+      padding: 40px 32px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
       text-decoration: none; color: inherit;
-      display: block; position: relative; overflow: hidden;
-      transition: background 0.25s;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
     }
-    .proj-card:not(:first-child) { border-left: none; }
-    /* 2nd row */
-    .proj-card:nth-child(4),
-    .proj-card:nth-child(5),
-    .proj-card:nth-child(6) { border-top: 1px solid var(--border); }
-    .proj-card:nth-child(4) { border-left: 1px solid var(--border); }
-
-    /* hover only on <a> cards */
-    a.proj-card { cursor: pointer; }
-    a.proj-card::after {
-      content: ''; position: absolute; bottom: 0; left: 0;
-      width: 100%; height: 0; background: var(--accent-dim);
-      transition: height 0.3s ease;
+    .proj-card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+      transform: translateY(-4px);
     }
-    a.proj-card:hover { background: var(--bg-2); }
-    a.proj-card:hover::after { height: 3px; }
-
     .proj-tag {
-      font-size: 10px; font-weight: 600; letter-spacing: 0.15em;
-      text-transform: uppercase; color: var(--accent);
-      margin-bottom: 16px; display: block;
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--text-dim); margin-bottom: 14px; display: block;
     }
+    .proj-role {
+      font-size: 10px; font-weight: 600;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--text-dim);
+      border: 1px solid var(--border);
+      padding: 4px 10px; border-radius: 100px;
+      display: inline-block; margin-bottom: 14px;
+    }
+    .proj-role.solo { color: var(--text); border-color: var(--text); }
     .proj-name {
       font-family: 'DM Serif Display', serif;
-      font-size: clamp(26px, 2.8vw, 40px);
-      color: var(--text); margin-bottom: 14px;
-      line-height: 1.15; letter-spacing: -0.01em;
+      font-size: clamp(22px, 2.5vw, 32px);
+      color: var(--text); margin-bottom: 12px;
+      line-height: 1.2;
     }
     .proj-desc {
-      font-size: 15px; color: var(--text-muted);
-      line-height: 1.75; font-weight: 300; margin-bottom: 28px;
+      font-size: 14px; color: var(--text-sub);
+      line-height: 1.75; font-weight: 300; margin-bottom: 24px;
     }
     .proj-stats { display: flex; gap: 24px; }
-    .proj-stat {}
     .proj-stat-val {
       font-family: 'DM Serif Display', serif;
-      font-size: 22px; color: var(--text);
-      line-height: 1; letter-spacing: -0.01em;
+      font-size: 20px; color: var(--text); line-height: 1;
     }
-    .proj-stat-key { font-size: 11px; color: var(--text-muted); margin-top: 3px; }
-
-    .proj-arrow {
-      position: absolute; top: 28px; right: 28px;
-      font-size: 16px; color: var(--text-dim);
-      transition: color 0.2s, transform 0.2s;
-    }
+    .proj-stat-key { font-size: 11px; color: var(--text-dim); margin-top: 4px; }
+    .proj-arrow { font-size: 14px; color: var(--text-dim); transition: transform 0.2s; }
     .proj-card:hover .proj-arrow,
-    .proj-featured:hover .proj-arrow { color: var(--accent); transform: rotate(45deg); }
-
-    /* ── VISION ── */
-    .vision {
-      padding: 120px 56px;
-      background: var(--bg-2);
-      border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start;
-    }
-    .vision-left {}
-    .vision-headline {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(40px, 5.5vw, 76px);
-      line-height: 1.0; color: var(--text); margin-top: 32px;
-      letter-spacing: -0.03em;
-    }
-    .vision-headline em { font-style: italic; color: var(--text-muted); }
-    .vision-right { padding-top: 48px; }
-    .vision-quote {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(18px, 2vw, 24px); font-style: italic;
-      color: var(--text); line-height: 1.65;
-      border-left: 2px solid var(--accent); padding-left: 28px;
-      margin-bottom: 40px;
-    }
-    .vision-quote em { color: var(--accent); font-style: italic; }
-    .vision-list { display: flex; flex-direction: column; gap: 20px; }
-    .vision-item { display: flex; gap: 20px; align-items: flex-start; }
-    .vision-num {
-      font-size: 11px; font-weight: 700; color: var(--accent);
-      letter-spacing: 0.1em; min-width: 28px; padding-top: 3px;
-    }
-    .vision-text { font-size: 16px; color: var(--text-muted); line-height: 1.7; font-weight: 300; }
-    .vision-text strong { color: var(--text); font-weight: 500; }
-
-    /* ── CONTACT ── */
-    .contact {
-      padding: 120px 56px;
-      border-top: 1px solid var(--border);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
-    }
-    .contact-headline {
-      font-family: 'DM Serif Display', serif;
-      font-size: clamp(40px, 5.5vw, 72px);
-      line-height: 1.0; color: var(--text);
-      letter-spacing: -0.025em;
-    }
-    .contact-headline em { font-style: italic; color: var(--text-muted); }
-    .contact-right { display: flex; flex-direction: column; gap: 0; }
-    .contact-row { border-bottom: 1px solid var(--border); padding: 24px 0; }
-    .contact-row:first-child { padding-top: 0; }
-    .contact-label { font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 6px; }
-    .contact-val { font-size: 16px; color: var(--text); text-decoration: none; transition: color 0.2s; }
-    .contact-val:hover { color: var(--accent); }
-    .contact-btn {
-      display: inline-flex; align-items: center; gap: 12px;
-      background: var(--text); color: var(--bg);
-      padding: 18px 36px; font-size: 14px; font-weight: 600;
-      letter-spacing: 0.04em; text-decoration: none; border-radius: 6px;
-      transition: opacity 0.2s, gap 0.25s; width: fit-content;
-      margin-top: 32px;
-    }
-    .contact-btn:hover { opacity: 0.88; gap: 20px; }
-
-    /* ── FOOTER ── */
-    footer {
-      padding: 28px 56px; border-top: 1px solid var(--border);
-      display: flex; justify-content: space-between; align-items: center;
-    }
-    footer span { font-size: 12px; color: var(--text-dim); letter-spacing: 0.04em; }
-
-    /* ── ANIMATIONS ── */
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes slidein {
-      0% { left: -100%; } 50% { left: 100%; } 100% { left: 100%; }
-    }
-    /* GSAP handles reveal animations — no CSS opacity:0 needed */
-    .reveal {
-      opacity: 1; transform: none;
-    }
-    .reveal.visible { opacity: 1; transform: none; }
-
-    /* 3D tilt for project cards */
-    .proj-card, .proj-featured { transform-style: preserve-3d; perspective: 800px; }
-    .proj-card-inner { transform-style: preserve-3d; }
-
-    /* Smooth section transitions */
-    .section-cinematic { will-change: transform, opacity; }
-
-    /* Parallax layers */
-    .hero-grid-bg, .hero-name-wrap, .hero-bottombar { will-change: transform; }
-
-    /* Stagger children animation */
-    .stagger-child { opacity: 0; transform: translateY(30px); }
-
-    /* Horizontal reveal line */
-    .line-reveal { transform: scaleX(0); transform-origin: left; }
-
-    /* Text split animation */
-    .char-reveal { display: inline-block; opacity: 0; transform: translateY(100%); }
-
-    /* Glow pulse on scroll */
-    .glow-on-scroll { transition: box-shadow 0.6s ease; }
-    .glow-on-scroll.glowing { box-shadow: 0 0 60px rgba(139,92,246,0.15), 0 0 120px rgba(139,92,246,0.05); }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 900px) {
-      nav { padding: 20px 24px; }
-      .hero { padding: 100px 24px 48px; }
-      .hero { padding: 0 28px 48px; }
-      .hero-topbar { padding-top: 96px; }
-      .hero-topbar-right { display: none; }
-      .hero-bottombar { flex-direction: column; align-items: flex-start; gap: 24px; }
-      .hero-bottom-right { align-items: flex-start; }
-      .metrics-strip { grid-template-columns: repeat(2, 1fr); }
-      .metric:nth-child(2),
-      .metric:nth-child(4),
-      .metric:nth-child(6) { border-right: none; }
-      .metric:nth-child(3),
-      .metric:nth-child(4) { border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
-      .metric:nth-child(5),
-      .metric:nth-child(6) { border-bottom: none; }
-      .story { grid-template-columns: 1fr; padding: 80px 24px; gap: 48px; }
-      .skills { padding: 60px 24px; }
-      .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 36px; }
-      .projects { padding: 60px 24px 80px; }
-      .proj-featured { grid-template-columns: 1fr; }
-      .proj-featured-visual { display: none; }
-      .proj-grid,
-      .proj-grid-2col { grid-template-columns: 1fr; }
-      .proj-card { border-left: 1px solid var(--border) !important; border-top: 1px solid var(--border) !important; }
-      .vision { grid-template-columns: 1fr; padding: 80px 24px; }
-      .vision-right { padding-top: 0; }
-      .contact { grid-template-columns: 1fr; padding: 80px 24px; }
-      footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
-    }
-    @media (max-width: 480px) {
-      .metrics-strip { grid-template-columns: 1fr; }
-      .metric { border-right: none !important; border-bottom: 1px solid var(--border) !important; }
-      .metric:last-child { border-bottom: none !important; }
-      .skills-grid { grid-template-columns: 1fr; }
-      .hero-name { font-size: clamp(60px, 16vw, 96px); }
-    }
+    .proj-featured:hover .proj-arrow { transform: translate(2px, -2px); }
 
     /* ── GARNET MOCKUP ── */
     .garnet-mockup {
-      width: calc(100% - 40px);
+      width: 90%; max-width: 380px;
       background: #0e0d0b;
-      border: 1px solid rgba(240,237,232,0.14);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 24px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,255,255,0.04) inset;
-      position: relative; z-index: 1;
-      font-family: 'Space Grotesk', sans-serif;
+      border-radius: 12px; overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+      font-family: 'Inter', sans-serif;
     }
     .garnet-titlebar {
-      background: #1a1713;
-      padding: 9px 14px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      border-bottom: 1px solid rgba(240,237,232,0.08);
+      background: #1a1713; padding: 10px 14px;
+      display: flex; align-items: center; gap: 6px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
-    .garnet-dot {
-      width: 10px; height: 10px;
-      border-radius: 50%;
-      display: inline-block;
-      opacity: 0.85;
-    }
+    .garnet-dot { width: 10px; height: 10px; border-radius: 50%; }
     .garnet-dot.r { background: #ff5f56; }
     .garnet-dot.y { background: #ffbd2e; }
     .garnet-dot.g { background: #27c93f; }
     .garnet-window-title {
-      font-size: 10px;
-      color: rgba(240,237,232,0.35);
-      margin-left: auto; margin-right: auto;
-      letter-spacing: 0.06em; font-weight: 500;
+      font-size: 10px; color: rgba(255,255,255,0.3);
+      margin: 0 auto; letter-spacing: 0.06em;
     }
     .garnet-tabs {
-      display: flex;
-      background: #141210;
-      border-bottom: 1px solid rgba(240,237,232,0.08);
+      display: flex; background: #141210;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .g-tab {
       flex: 1; padding: 8px 10px;
       background: none; border: none;
-      color: rgba(240,237,232,0.3);
+      color: rgba(255,255,255,0.3);
       font-size: 9px; font-weight: 600;
-      letter-spacing: 0.12em; cursor: pointer;
-      transition: color 0.25s, background 0.25s;
-      font-family: 'Space Grotesk', sans-serif;
+      letter-spacing: 0.1em; cursor: pointer;
+      font-family: 'Inter', sans-serif;
       text-transform: uppercase;
       border-bottom: 2px solid transparent;
+      transition: color 0.2s, border-color 0.2s;
     }
-    .g-tab.active {
-      color: var(--accent);
-      background: rgba(255,69,0,0.06);
-      border-bottom-color: var(--accent);
-    }
+    .g-tab.active { color: #8b5cf6; border-bottom-color: #8b5cf6; }
     .garnet-body { padding: 14px; }
-
-    /* shared UI atoms */
     .g-screen { display: none; }
     .g-screen.active { display: block; }
-    .g-row-hd {
-      display: flex; justify-content: space-between; align-items: center;
-      margin-bottom: 10px;
-    }
-    .g-section-label {
-      font-size: 9px; font-weight: 700;
-      letter-spacing: 0.14em; text-transform: uppercase;
-      color: rgba(240,237,232,0.55);
-    }
-    .g-live {
-      display: flex; align-items: center; gap: 4px;
-      font-size: 9px; font-weight: 600; color: #27c93f;
-    }
-    .g-live-dot {
-      width: 5px; height: 5px; border-radius: 50%;
-      background: #27c93f;
-      animation: gPulse 1.6s ease-in-out infinite;
-    }
+    .g-row-hd { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .g-section-label { font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .g-live { display: flex; align-items: center; gap: 4px; font-size: 9px; font-weight: 600; color: #27c93f; }
+    .g-live-dot { width: 5px; height: 5px; border-radius: 50%; background: #27c93f; animation: gPulse 1.6s ease-in-out infinite; }
     @keyframes gPulse { 0%,100%{opacity:1;} 50%{opacity:0.25;} }
-
-    /* Screen 0: AI 성과 분석 */
     .g-insights { display: flex; flex-direction: column; gap: 6px; }
-    .g-insight {
-      display: flex; align-items: flex-start; gap: 8px;
-      background: rgba(240,237,232,0.04);
-      border-left: 2px solid;
-      padding: 7px 10px;
-      border-radius: 0 5px 5px 0;
-    }
+    .g-insight { display: flex; align-items: flex-start; gap: 8px; background: rgba(255,255,255,0.04); border-left: 2px solid; padding: 7px 10px; border-radius: 0 5px 5px 0; }
     .g-insight.summary { border-color: rgba(100,180,255,0.5); }
     .g-insight.finding { border-color: rgba(255,189,46,0.6); }
-    .g-insight.action  { border-color: rgba(255,69,0,0.7);   }
+    .g-insight.action { border-color: rgba(139,92,246,0.7); }
     .g-insight.anomaly { border-color: rgba(100,240,160,0.5); }
-    .g-insight-tag {
-      font-size: 8px; font-weight: 700; letter-spacing: 0.1em;
-      text-transform: uppercase; min-width: 40px; padding-top: 1px;
-    }
+    .g-insight-tag { font-size: 8px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; min-width: 40px; padding-top: 1px; }
     .g-insight.summary .g-insight-tag { color: rgba(100,180,255,0.9); }
     .g-insight.finding .g-insight-tag { color: rgba(255,189,46,0.9); }
-    .g-insight.action  .g-insight-tag { color: var(--accent); }
+    .g-insight.action .g-insight-tag { color: #8b5cf6; }
     .g-insight.anomaly .g-insight-tag { color: rgba(100,240,160,0.9); }
-    .g-insight-text {
-      font-size: 10px; color: rgba(240,237,232,0.5); line-height: 1.45;
-    }
-    .g-mini-bars {
-      display: flex; align-items: flex-end; gap: 3px;
-      height: 26px; margin-top: 10px;
-    }
-    .g-bar {
-      flex: 1; background: rgba(255,69,0,0.2);
-      border-radius: 2px 2px 0 0; min-width: 0;
-    }
-    .g-bar.hi { background: rgba(255,69,0,0.55); }
-
-    /* Screen 1: SNS 스튜디오 */
+    .g-insight-text { font-size: 10px; color: rgba(255,255,255,0.5); line-height: 1.45; }
+    .g-mini-bars { display: flex; align-items: flex-end; gap: 3px; height: 26px; margin-top: 10px; }
+    .g-bar { flex: 1; background: rgba(139,92,246,0.2); border-radius: 2px 2px 0 0; }
+    .g-bar.hi { background: rgba(139,92,246,0.55); }
     .g-metrics { display: flex; gap: 6px; margin-bottom: 10px; }
-    .g-metric {
-      flex: 1; background: rgba(240,237,232,0.04);
-      border: 1px solid rgba(240,237,232,0.08);
-      border-radius: 6px; padding: 8px 8px; text-align: center;
-    }
-    .g-metric-val {
-      font-family: 'DM Serif Display', serif;
-      font-size: 15px; line-height: 1;
-      color: var(--text);
-    }
-    .g-metric-val.blurred {
-      filter: blur(3.5px);
-      user-select: none;
-      pointer-events: none;
-    }
-    .g-metric-lbl {
-      font-size: 8px; color: rgba(240,237,232,0.35);
-      margin-top: 3px; letter-spacing: 0.06em;
-    }
+    .g-metric { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px; text-align: center; }
+    .g-metric-val { font-family: 'DM Serif Display', serif; font-size: 15px; color: #f0edf8; }
+    .g-metric-val.blurred { filter: blur(3.5px); user-select: none; }
+    .g-metric-lbl { font-size: 8px; color: rgba(255,255,255,0.35); margin-top: 3px; }
     .g-ai-chat { display: flex; flex-direction: column; gap: 5px; }
     .g-msg { display: flex; gap: 6px; align-items: flex-start; }
-    .g-avatar {
-      width: 18px; height: 18px; border-radius: 50%;
-      background: rgba(255,69,0,0.25);
-      display: flex; align-items: center; justify-content: center;
-      font-size: 8px; font-weight: 700; color: var(--accent);
-      flex-shrink: 0;
-    }
-    .g-bubble {
-      background: rgba(240,237,232,0.06);
-      border-radius: 0 7px 7px 7px;
-      padding: 5px 9px;
-      font-size: 9.5px; color: rgba(240,237,232,0.5); line-height: 1.45;
-      max-width: 180px;
-    }
+    .g-avatar { width: 18px; height: 18px; border-radius: 50%; background: rgba(139,92,246,0.25); display: flex; align-items: center; justify-content: center; font-size: 8px; font-weight: 700; color: #8b5cf6; flex-shrink: 0; }
+    .g-bubble { background: rgba(255,255,255,0.06); border-radius: 0 7px 7px 7px; padding: 5px 9px; font-size: 9.5px; color: rgba(255,255,255,0.5); line-height: 1.45; max-width: 180px; }
     .g-typing { display: flex; gap: 3px; align-items: center; padding: 7px 10px; }
-    .g-typing span {
-      width: 4px; height: 4px; border-radius: 50%;
-      background: rgba(240,237,232,0.3);
-      animation: gBounce 1s ease-in-out infinite;
-    }
+    .g-typing span { width: 4px; height: 4px; border-radius: 50%; background: rgba(255,255,255,0.3); animation: gBounce 1s ease-in-out infinite; }
     .g-typing span:nth-child(2) { animation-delay: 0.15s; }
     .g-typing span:nth-child(3) { animation-delay: 0.3s; }
     @keyframes gBounce { 0%,80%,100%{transform:translateY(0);} 40%{transform:translateY(-4px);} }
-
-    /* Screen 2: 세미나 스튜디오 */
     .g-agents { display: flex; gap: 6px; margin-bottom: 10px; }
-    .g-agent {
-      flex: 1; background: rgba(240,237,232,0.04);
-      border: 1px solid rgba(240,237,232,0.08);
-      border-radius: 6px; padding: 8px 6px; text-align: center;
-    }
-    .g-agent-icon { font-size: 16px; display: block; line-height: 1; }
-    .g-agent-name {
-      font-size: 8px; font-weight: 600; letter-spacing: 0.06em;
-      color: rgba(240,237,232,0.5); margin-top: 4px;
-    }
-    .g-agent-st {
-      font-size: 8px; color: #27c93f; margin-top: 2px;
-    }
-    .g-agent-st.idle { color: rgba(240,237,232,0.2); }
+    .g-agent { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 8px 6px; text-align: center; }
+    .g-agent-icon { font-size: 16px; }
+    .g-agent-name { font-size: 8px; font-weight: 600; color: rgba(255,255,255,0.5); margin-top: 4px; }
+    .g-agent-st { font-size: 8px; color: #27c93f; margin-top: 2px; }
+    .g-agent-st.idle { color: rgba(255,255,255,0.2); }
+    .g-round-badge { display: inline-flex; align-items: center; gap: 4px; font-size: 8px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #8b5cf6; border: 1px solid rgba(139,92,246,0.3); padding: 3px 8px; border-radius: 3px; margin-bottom: 8px; }
     .g-discussion { display: flex; flex-direction: column; gap: 5px; }
     .g-turn { display: flex; gap: 6px; align-items: flex-start; }
-    .g-turn-who {
-      font-size: 8px; font-weight: 700; color: var(--accent);
-      min-width: 34px; padding-top: 2px; text-transform: uppercase;
-      letter-spacing: 0.07em;
+    .g-turn-who { font-size: 8px; font-weight: 700; color: #8b5cf6; min-width: 34px; padding-top: 2px; text-transform: uppercase; }
+    .g-turn-text { font-size: 9.5px; color: rgba(255,255,255,0.45); line-height: 1.45; }
+
+    /* ── STORY ── */
+    .story {
+      display: grid; grid-template-columns: 280px 1fr;
+      gap: 80px;
     }
-    .g-turn-text {
-      font-size: 9.5px; color: rgba(240,237,232,0.45); line-height: 1.45; flex: 1;
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+    .timeline-item { display: flex; gap: 16px; padding-bottom: 32px; position: relative; }
+    .timeline-item:not(:last-child)::after {
+      content: ''; position: absolute; left: 3px; top: 20px;
+      width: 1px; height: calc(100% - 8px); background: var(--border);
     }
-    .g-round-badge {
-      display: inline-flex; align-items: center; gap: 4px;
-      font-size: 8px; font-weight: 600; letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent); border: 1px solid rgba(255,69,0,0.3);
-      padding: 3px 8px; border-radius: 3px; margin-bottom: 8px;
+    .timeline-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text-dim); flex-shrink: 0; margin-top: 6px; }
+    .timeline-item.current .timeline-dot { background: var(--text); }
+    .timeline-period { font-size: 11px; color: var(--text-dim); margin-bottom: 4px; }
+    .timeline-role { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .timeline-company { font-size: 13px; color: var(--text-sub); }
+
+    .story-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(32px, 3.5vw, 48px);
+      line-height: 1.15; color: var(--text);
+      margin-bottom: 36px;
+    }
+    .story-headline em { font-style: italic; color: var(--text-sub); }
+    .story-body p { font-size: 16px; color: var(--text-sub); line-height: 1.85; font-weight: 300; }
+    .story-body p + p { margin-top: 24px; }
+    .story-body strong { color: var(--text); font-weight: 500; }
+    .story-highlight {
+      margin-top: 32px; padding: 20px 24px;
+      border-left: 2px solid var(--text);
+      background: var(--accent-soft);
+      border-radius: 0 8px 8px 0;
+    }
+    .story-highlight p { font-size: 14px; color: var(--text-sub); line-height: 1.7; }
+
+    /* ── SKILLS ── */
+    .skills-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
+    .skill-group-label {
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--text); margin-bottom: 16px;
+    }
+    .skill-item {
+      font-size: 14px; color: var(--text-sub);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .skill-item:last-child { border-bottom: none; }
+
+    /* ── VISION ── */
+    .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+    .vision-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 4.5vw, 60px);
+      line-height: 1.05; margin-top: 24px;
+    }
+    .vision-headline em { font-style: italic; color: var(--text-sub); }
+    .vision-quote {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(18px, 2vw, 22px); font-style: italic;
+      color: var(--text); line-height: 1.65;
+      border-left: 2px solid var(--text);
+      padding-left: 24px; margin-bottom: 36px;
+    }
+    .vision-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .vision-num { font-size: 12px; font-weight: 700; color: var(--text-dim); min-width: 24px; padding-top: 2px; }
+    .vision-text { font-size: 15px; color: var(--text-sub); line-height: 1.7; font-weight: 300; }
+    .vision-text strong { color: var(--text); font-weight: 500; }
+
+    /* ── CONTACT ── */
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+    .contact-headline {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(36px, 5vw, 64px);
+      line-height: 1.05;
+    }
+    .contact-headline em { font-style: italic; color: var(--text-sub); }
+    .contact-row { border-bottom: 1px solid var(--border); padding: 20px 0; }
+    .contact-label { font-size: 11px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 4px; }
+    .contact-val { font-size: 16px; color: var(--text); text-decoration: none; transition: opacity 0.2s; }
+    .contact-val:hover { opacity: 0.6; }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--text); color: var(--bg);
+      padding: 16px 32px; font-size: 14px; font-weight: 500;
+      text-decoration: none; border-radius: 100px;
+      margin-top: 28px; transition: opacity 0.2s;
+    }
+    .contact-btn:hover { opacity: 0.85; }
+
+    /* ── FOOTER ── */
+    footer {
+      padding: 24px 48px; border-top: 1px solid var(--border);
+      display: flex; justify-content: space-between;
+      max-width: 1200px; margin: 0 auto;
+    }
+    footer span { font-size: 12px; color: var(--text-dim); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 16px 24px; }
+      .hero { padding: 100px 24px 60px; }
+      .metrics { grid-template-columns: repeat(2, 1fr); }
+      .section { padding: 80px 24px; }
+      .story { grid-template-columns: 1fr; gap: 48px; }
+      .proj-featured { grid-template-columns: 1fr; }
+      .proj-featured-visual { min-height: 260px; }
+      .proj-grid, .proj-grid-2col { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .vision-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+      footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
+    }
+    @media (max-width: 480px) {
+      .metrics { grid-template-columns: 1fr; }
+      .skills-grid { grid-template-columns: 1fr; }
+      .hero-name { font-size: clamp(40px, 12vw, 64px); }
+      .hero-bottom { flex-direction: column; gap: 16px; align-items: flex-start; }
     }
   </style>
 </head>
@@ -841,1063 +427,368 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <a href="#" class="nav-logo">정재호</a>
+  <a href="#" class="nav-logo">JH.</a>
   <div class="nav-links">
-    <a href="#projects">프로젝트</a>
-    <a href="#story">커리어</a>
-    <a href="#vision">비전</a>
-    <a href="#contact" class="nav-cta">연락하기</a>
+    <a href="#projects">Projects</a>
+    <a href="#story">Career</a>
+    <a href="#vision">Vision</a>
+    <a href="#contact" class="nav-cta">Contact</a>
   </div>
 </nav>
 
 <!-- HERO -->
 <section class="hero">
-  <div class="hero-grid-bg"></div>
-
-  <!-- Top bar -->
-  <div class="hero-topbar">
-    <div class="hero-tag">AI-driven Marketer × Builder</div>
-    <div class="hero-topbar-right">현재 RNR · MONOPLEX / 2024.09 —</div>
-  </div>
-
-  <!-- Name -->
-  <div class="hero-name-wrap">
-    <h1 class="hero-name">Jaeho<br><span class="italic">Jung.</span></h1>
-  </div>
-
-  <!-- Bottom bar -->
-  <div class="hero-bottombar">
-    <p class="hero-desc">
-      <strong>자율 학습 AI 에이전트 시스템</strong>을 직접 설계·구축하고,<br>
-      데이터로 전략을 세우며, <strong>혼자서 팀의 성과</strong>를 냅니다.<br>
-      <span style="font-size:14px;color:var(--text-dim);font-weight:300;">Agent Architect · Growth Strategist · System Builder</span>
-    </p>
-    <div class="hero-bottom-right">
-      <div class="hero-meta">
-        <span class="hero-meta-dot"></span>
-        Open to new opportunities · jjhtv@kakao.com
-      </div>
-      <div class="hero-scroll">
-        <div class="scroll-bar"></div>
-        Scroll to explore
-      </div>
-    </div>
+  <div class="hero-tag">Growth Marketer &amp; System Builder</div>
+  <h1 class="hero-name">숫자 뒤에 숨은<br><em>맥락을 찾습니다.</em></h1>
+  <p class="hero-desc">
+    <strong>데이터로 고객을 이해하고</strong>, 전략을 세우고, 성과를 만듭니다.<br>
+    반복되는 일은 자동화하고, 사람이 해야 할 고민에 집중합니다.
+  </p>
+  <div class="hero-bottom">
+    <span class="hero-meta">현재 MONOPLEX 마케팅 총괄 · 30개 지점</span>
+    <span class="hero-scroll">Scroll to explore ↓</span>
   </div>
 </section>
 
-<!-- MARQUEE -->
-<div class="marquee-wrap">
-  <div class="marquee-inner">
-    <span class="marquee-item">AI Marketer</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">Agent System Architect</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Brand Marketing</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">220만 도달</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">Multi-Agent System</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">5인 AI 전문가 팀</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anthropic 5패턴</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">95% 자동화</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">CRM Strategy</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Viral Campaign</span><span class="marquee-sep">✦</span>
-    <!-- repeat for seamless loop -->
-    <span class="marquee-item">AI Marketer</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">Agent System Architect</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Brand Marketing</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">220만 도달</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">Multi-Agent System</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">5인 AI 전문가 팀</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Anthropic 5패턴</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item accent">95% 자동화</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">CRM Strategy</span><span class="marquee-sep">✦</span>
-    <span class="marquee-item">Viral Campaign</span><span class="marquee-sep">✦</span>
-  </div>
-</div>
-
-<!-- METRICS STRIP -->
-<div class="metrics-strip" id="metrics">
-  <div class="metric reveal" data-index="01">
-    <div class="metric-num"><span class="counter" data-target="90">0</span><span class="accent">%+</span></div>
+<!-- METRICS -->
+<div class="metrics" id="metrics">
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="90">0</span>%+</div>
     <div class="metric-desc">재방문율 달성</div>
     <div class="metric-source">CRM · 콘텐츠 전략</div>
   </div>
-  <div class="metric reveal reveal-d1" data-index="02">
-    <div class="metric-num"><span class="counter" data-target="95">0</span><span class="accent">%</span></div>
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="95">0</span>%</div>
     <div class="metric-desc">반복업무 자동화 단축</div>
     <div class="metric-source">AI · Zapier · Garnet</div>
   </div>
-  <div class="metric reveal reveal-d2" data-index="03">
-    <div class="metric-num"><span class="counter" data-target="2" data-decimal="true">0</span><span class="accent">.8×</span></div>
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="2" data-decimal="true">0</span>.8×</div>
     <div class="metric-desc">전환율 상승</div>
     <div class="metric-source">카카오 채널 리브랜딩</div>
   </div>
-  <div class="metric reveal reveal-d3" data-index="04">
-    <div class="metric-num"><span class="counter" data-target="220">0</span><span class="accent">만</span></div>
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="220">0</span>만</div>
     <div class="metric-desc">바이럴 캠페인 도달</div>
     <div class="metric-source">NONOL 캠페인</div>
   </div>
-  <div class="metric reveal reveal-d4" data-index="05">
-    <div class="metric-num"><span class="counter" data-target="300">0</span><span class="accent">%</span></div>
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="300">0</span>%</div>
     <div class="metric-desc">B2B 대관 매출 성장</div>
     <div class="metric-source">월 3건 → 15건</div>
   </div>
-  <div class="metric reveal reveal-d5" data-index="06">
-    <div class="metric-num"><span class="counter" data-target="200">0</span><span class="accent">%+</span></div>
+  <div class="metric">
+    <div class="metric-num"><span class="counter" data-target="200">0</span>%+</div>
     <div class="metric-desc">홈페이지 방문자 증가</div>
     <div class="metric-source">UX 전면 개편</div>
   </div>
 </div>
 
 <!-- PROJECTS -->
-<section class="projects" id="projects">
-  <div class="projects-header reveal">
-    <span class="section-eyebrow">Selected Projects</span>
-    <span class="projects-count">08 Works</span>
-  </div>
-  <p class="editorial-hl reveal">숫자가 증명하는 일들.<br><strong>전략부터 도구 제작까지.</strong></p>
+<section class="section" id="projects">
+  <div class="section-label">Selected Projects</div>
+  <h2 class="section-title">성과가 증명하는 일들.</h2>
 
   <!-- Featured: Garnet -->
-  <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="proj-featured reveal">
+  <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="proj-featured">
     <div class="proj-featured-text">
-      <div class="proj-header">
-        <span class="proj-tag">Side Project · 5인 AI 전문가 팀</span>
-        <span class="proj-role solo">단독 설계 · 구축 · 운영</span>
-      </div>
-      <h3 class="proj-name">Garnet<br>Multi-Agent Marketing OS</h3>
-      <p class="proj-desc">
-        마케팅 운영 전 과정(데이터 수집 → 분석 → 전략 제안 → 실행 → 성과 측정 → 학습)을
-        24시간 자율 순환하는 AI 에이전트 시스템. Phase 1~6 진화 엔진, <strong>5명의 도메인 전문가</strong>
-        (분석/콘텐츠/전략/CRO/심리학) 병렬 추론, Anthropic의 5가지 Agent Workflow 패턴
-        전체 구현. 315건의 마케팅 도메인 지식 자율 축적 중. 개발자 없이 마케터 단독으로 설계·구축·운영.
-      </p>
+      <span class="proj-tag">Side Project · AI System</span>
+      <span class="proj-role solo">단독 설계·구축</span>
+      <h3 class="proj-name">Garnet<br>Marketing AI Agent</h3>
+      <p class="proj-desc">5명의 AI 전문가가 24시간 데이터를 분석하고, 스스로 예측을 검증하며 학습하는 마케팅 자동화 시스템. 코딩 경험 없이 Claude Code로 직접 설계·구축. 오픈소스 공개.</p>
       <div class="proj-stats">
-        <div class="proj-stat">
-          <div class="proj-stat-val">5인</div>
-          <div class="proj-stat-key">AI 전문가 병렬 추론</div>
-        </div>
-        <div class="proj-stat">
-          <div class="proj-stat-val">315건</div>
-          <div class="proj-stat-key">자율 축적 도메인 지식</div>
-        </div>
-        <div class="proj-stat">
-          <div class="proj-stat-val">110/일</div>
-          <div class="proj-stat-key">자율 판단 사이클</div>
-        </div>
+        <div class="proj-stat"><div class="proj-stat-val">5인</div><div class="proj-stat-key">AI 전문가 병렬 추론</div></div>
+        <div class="proj-stat"><div class="proj-stat-val">400+</div><div class="proj-stat-key">자율 축적 도메인 지식</div></div>
+        <div class="proj-stat"><div class="proj-stat-val">24/7</div><div class="proj-stat-key">자율 분석 사이클</div></div>
       </div>
     </div>
     <div class="proj-featured-visual">
       <div class="garnet-mockup">
-        <!-- Title bar -->
         <div class="garnet-titlebar">
-          <span class="garnet-dot r"></span>
-          <span class="garnet-dot y"></span>
-          <span class="garnet-dot g"></span>
+          <span class="garnet-dot r"></span><span class="garnet-dot y"></span><span class="garnet-dot g"></span>
           <span class="garnet-window-title">Garnet AI — Marketing OS</span>
         </div>
-        <!-- Tabs -->
         <div class="garnet-tabs">
           <button class="g-tab active" data-gtab="0">전문가 분석</button>
           <button class="g-tab" data-gtab="1">자기 개선</button>
           <button class="g-tab" data-gtab="2">퍼널 분석</button>
         </div>
-        <!-- Screens -->
         <div class="garnet-body">
-
-          <!-- Screen 0: AI 성과 분석 -->
           <div class="g-screen active" id="gs-0">
-            <div class="g-row-hd">
-              <span class="g-section-label">AI 인사이트 리포트</span>
-              <span class="g-live"><span class="g-live-dot"></span>분석 중</span>
-            </div>
+            <div class="g-row-hd"><span class="g-section-label">AI 인사이트 리포트</span><span class="g-live"><span class="g-live-dot"></span>분석 중</span></div>
             <div class="g-insights">
-              <div class="g-insight summary">
-                <span class="g-insight-tag">요약</span>
-                <span class="g-insight-text">이번 주 주요 성과 자동 집계 — 전반적 지표 안정적</span>
-              </div>
-              <div class="g-insight finding">
-                <span class="g-insight-tag">발견</span>
-                <span class="g-insight-text">수요일 예매 급등 감지 — 전주 대비 이상 패턴</span>
-              </div>
-              <div class="g-insight action">
-                <span class="g-insight-tag">액션</span>
-                <span class="g-insight-text">우선순위 마케팅 액션 3가지 자동 생성</span>
-              </div>
-              <div class="g-insight anomaly">
-                <span class="g-insight-tag">이상치</span>
-                <span class="g-insight-text">특정 콘텐츠 참여율 급증 — 원인 분석 완료</span>
-              </div>
+              <div class="g-insight summary"><span class="g-insight-tag">요약</span><span class="g-insight-text">이번 주 주요 성과 자동 집계 — 전반적 지표 안정적</span></div>
+              <div class="g-insight finding"><span class="g-insight-tag">발견</span><span class="g-insight-text">수요일 예매 급등 감지 — 전주 대비 이상 패턴</span></div>
+              <div class="g-insight action"><span class="g-insight-tag">액션</span><span class="g-insight-text">우선순위 마케팅 액션 3가지 자동 생성</span></div>
+              <div class="g-insight anomaly"><span class="g-insight-tag">이상치</span><span class="g-insight-text">특정 콘텐츠 참여율 급증 — 원인 분석 완료</span></div>
             </div>
             <div class="g-mini-bars">
-              <div class="g-bar" style="height:40%"></div>
-              <div class="g-bar" style="height:55%"></div>
-              <div class="g-bar hi" style="height:90%"></div>
-              <div class="g-bar" style="height:70%"></div>
-              <div class="g-bar" style="height:60%"></div>
-              <div class="g-bar hi" style="height:85%"></div>
-              <div class="g-bar" style="height:50%"></div>
+              <div class="g-bar" style="height:40%"></div><div class="g-bar" style="height:55%"></div><div class="g-bar hi" style="height:90%"></div>
+              <div class="g-bar" style="height:70%"></div><div class="g-bar" style="height:60%"></div><div class="g-bar hi" style="height:85%"></div><div class="g-bar" style="height:50%"></div>
             </div>
           </div>
-
-          <!-- Screen 1: SNS 스튜디오 -->
           <div class="g-screen" id="gs-1">
-            <div class="g-row-hd">
-              <span class="g-section-label">SNS 성과 분석</span>
-              <span class="g-live"><span class="g-live-dot"></span>자동 분석</span>
-            </div>
-            <div class="g-metrics">
-              <div class="g-metric">
-                <div class="g-metric-val blurred">128.4K</div>
-                <div class="g-metric-lbl">도달(Reach)</div>
-              </div>
-              <div class="g-metric">
-                <div class="g-metric-val blurred">4.7%</div>
-                <div class="g-metric-lbl">참여율</div>
-              </div>
-              <div class="g-metric">
-                <div class="g-metric-val blurred">2.1×</div>
-                <div class="g-metric-lbl">전환율</div>
-              </div>
-            </div>
-            <div class="g-ai-chat">
-              <div class="g-msg">
-                <div class="g-avatar">AI</div>
-                <div class="g-bubble">릴스 콘텐츠가 피드 대비 도달 3.2배 높음</div>
-              </div>
-              <div class="g-msg">
-                <div class="g-avatar">AI</div>
-                <div class="g-bubble">목·금 오후 7~9시 게시 시 참여율 최적</div>
-              </div>
-              <div class="g-typing">
-                <span></span><span></span><span></span>
-              </div>
-            </div>
+            <div class="g-row-hd"><span class="g-section-label">SNS 성과 분석</span><span class="g-live"><span class="g-live-dot"></span>자동 분석</span></div>
+            <div class="g-metrics"><div class="g-metric"><div class="g-metric-val blurred">128.4K</div><div class="g-metric-lbl">도달</div></div><div class="g-metric"><div class="g-metric-val blurred">4.7%</div><div class="g-metric-lbl">참여율</div></div><div class="g-metric"><div class="g-metric-val blurred">2.1×</div><div class="g-metric-lbl">전환율</div></div></div>
+            <div class="g-ai-chat"><div class="g-msg"><div class="g-avatar">AI</div><div class="g-bubble">릴스 콘텐츠가 피드 대비 도달 3.2배 높음</div></div><div class="g-msg"><div class="g-avatar">AI</div><div class="g-bubble">목·금 오후 7~9시 게시 시 참여율 최적</div></div><div class="g-typing"><span></span><span></span><span></span></div></div>
           </div>
-
-          <!-- Screen 2: 세미나 스튜디오 -->
           <div class="g-screen" id="gs-2">
-            <div class="g-row-hd">
-              <span class="g-section-label">멀티 에이전트 세미나</span>
-              <span class="g-live"><span class="g-live-dot"></span>자동 진행</span>
-            </div>
-            <div class="g-agents">
-              <div class="g-agent">
-                <span class="g-agent-icon">🎯</span>
-                <div class="g-agent-name">전략가</div>
-                <div class="g-agent-st">발언 중</div>
-              </div>
-              <div class="g-agent">
-                <span class="g-agent-icon">📊</span>
-                <div class="g-agent-name">분석가</div>
-                <div class="g-agent-st idle">대기 중</div>
-              </div>
-              <div class="g-agent">
-                <span class="g-agent-icon">🔍</span>
-                <div class="g-agent-name">비평가</div>
-                <div class="g-agent-st idle">대기 중</div>
-              </div>
-            </div>
-            <div class="g-round-badge">
-              <span class="g-live-dot"></span>Round 2 / 3
-            </div>
-            <div class="g-discussion">
-              <div class="g-turn">
-                <span class="g-turn-who">전략가</span>
-                <span class="g-turn-text">SNS 콘텐츠 믹스를 릴스 중심으로 재편해야 합니다</span>
-              </div>
-              <div class="g-turn">
-                <span class="g-turn-who">비평가</span>
-                <span class="g-turn-text">데이터 충분한가요? 계절 요인도 검토 필요합니다</span>
-              </div>
-            </div>
+            <div class="g-row-hd"><span class="g-section-label">멀티 에이전트 세미나</span><span class="g-live"><span class="g-live-dot"></span>자동 진행</span></div>
+            <div class="g-agents"><div class="g-agent"><span class="g-agent-icon">🎯</span><div class="g-agent-name">전략가</div><div class="g-agent-st">발언 중</div></div><div class="g-agent"><span class="g-agent-icon">📊</span><div class="g-agent-name">분석가</div><div class="g-agent-st idle">대기 중</div></div><div class="g-agent"><span class="g-agent-icon">🔍</span><div class="g-agent-name">비평가</div><div class="g-agent-st idle">대기 중</div></div></div>
+            <div class="g-round-badge"><span class="g-live-dot"></span>Round 2 / 3</div>
+            <div class="g-discussion"><div class="g-turn"><span class="g-turn-who">전략가</span><span class="g-turn-text">SNS 콘텐츠 믹스를 릴스 중심으로 재편해야 합니다</span></div><div class="g-turn"><span class="g-turn-who">비평가</span><span class="g-turn-text">데이터 충분한가요? 계절 요인도 검토 필요합니다</span></div></div>
           </div>
-
-        </div><!-- /garnet-body -->
-      </div><!-- /garnet-mockup -->
-      <div class="proj-vis-badge">AI 자동 분석 · 멀티 에이전트</div>
+        </div>
+      </div>
     </div>
-    <div class="proj-arrow">↗</div>
+    <span class="proj-arrow">↗</span>
   </a>
 
-  <!-- 6-card grid -->
+  <!-- Project Grid -->
   <div class="proj-grid">
-    <a href="https://cast.monoplex.com" target="_blank" class="proj-card reveal">
-      <div class="proj-header">
-        <span class="proj-tag">Platform · Growth</span>
-        <span class="proj-role solo">단독 기획</span>
-      </div>
-      <h3 class="proj-name">MONOCAST<br>플랫폼</h3>
-      <p class="proj-desc">독립 영화관의 고질적 문제인 "어떤 영화를 상영할까"를 역발상으로 해결. 관객이 원하는 영화를 직접 요청하고 최소 인원이 모이면 상영하는 플랫폼을 기획·런칭했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">2개</div><div class="proj-stat-key">지점으로 확장</div></div>
-        <div class="proj-stat"><div class="proj-stat-val">단독</div><div class="proj-stat-key">기획~런칭 전담</div></div>
-      </div>
-      <div class="proj-arrow">↗</div>
+    <a href="https://cast.monoplex.com" target="_blank" class="proj-card">
+      <span class="proj-tag">Platform · Growth</span>
+      <span class="proj-role solo">단독 기획</span>
+      <h3 class="proj-name">MONOCAST 플랫폼</h3>
+      <p class="proj-desc">관객이 원하는 영화를 직접 요청하고 최소 인원이 모이면 상영하는 수요 기반 플랫폼을 기획·런칭.</p>
+      <div class="proj-stats"><div class="proj-stat"><div class="proj-stat-val">2개</div><div class="proj-stat-key">지점 확장</div></div></div>
+      <span class="proj-arrow">↗</span>
     </a>
-
-    <div class="proj-card reveal reveal-d1">
-      <div class="proj-header">
-        <span class="proj-tag">CRM · Brand</span>
-        <span class="proj-role solo">단독 전략</span>
-      </div>
-      <h3 class="proj-name">카카오 채널<br>리브랜딩</h3>
-      <p class="proj-desc">공지 채널로만 사용되던 카카오톡을 CS 채널로 재포지셔닝, 고객이 문의하며 자연스럽게 구독하는 구조를 설계했습니다. 광고비 없이 CRM 유입 허브를 구축했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">+7,000</div><div class="proj-stat-key">구독자 증가</div></div>
-        <div class="proj-stat"><div class="proj-stat-val">2.8×</div><div class="proj-stat-key">전환율</div></div>
-      </div>
+    <div class="proj-card">
+      <span class="proj-tag">CRM · Brand</span>
+      <span class="proj-role solo">단독 전략</span>
+      <h3 class="proj-name">카카오 채널 리브랜딩</h3>
+      <p class="proj-desc">공지 채널을 CS 허브로 재포지셔닝. 고객이 문의하며 자연스럽게 구독하는 구조를 설계.</p>
+      <div class="proj-stats"><div class="proj-stat"><div class="proj-stat-val">+7,000</div><div class="proj-stat-key">구독자</div></div><div class="proj-stat"><div class="proj-stat-val">2.8×</div><div class="proj-stat-key">전환율</div></div></div>
     </div>
-
-    <div class="proj-card reveal reveal-d2">
-      <div class="proj-header">
-        <span class="proj-tag">Viral · SNS</span>
-        <span class="proj-role solo">단독 기획</span>
-      </div>
-      <h3 class="proj-name">NONOL<br>바이럴 캠페인</h3>
-      <p class="proj-desc">소규모 독립 영화관의 SNS 예산 한계 안에서, 공유하고 싶은 스토리텔링과 참여형 콘텐츠 구조를 설계해 유기적 바이럴을 만들었습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">220만</div><div class="proj-stat-key">도달 (Reach)</div></div>
-      </div>
-    </div>
-
-    <div class="proj-card reveal">
-      <div class="proj-header">
-        <span class="proj-tag">B2B · Positioning</span>
-        <span class="proj-role solo">단독 전략</span>
-      </div>
-      <h3 class="proj-name">RYSE 대관<br>B2B 포지셔닝</h3>
-      <p class="proj-desc">인지도가 낮아 월 3건에 그치던 B2B 대관을, "프리미엄 이벤트 공간"으로 재포지셔닝해 기업 행사·프라이빗 시사회 수요를 직접 창출했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">5배</div><div class="proj-stat-key">대관 건수 증가</div></div>
-        <div class="proj-stat"><div class="proj-stat-val">월 15건</div><div class="proj-stat-key">월 3건 → 15건</div></div>
-      </div>
-    </div>
-
-    <a href="https://www.monoplex.com" target="_blank" class="proj-card reveal reveal-d1">
-      <div class="proj-header">
-        <span class="proj-tag">UX · Web</span>
-        <span class="proj-role solo">단독 기획·실행</span>
-      </div>
-      <h3 class="proj-name">MONOPLEX<br>홈페이지 UX 개편</h3>
-      <p class="proj-desc">GA4로 전환 퍼널을 분석해 이탈 구간을 특정하고, 예매 플로우 간소화·모바일 최적화·CTA 재배치를 직접 기획 및 실행했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">200%+</div><div class="proj-stat-key">방문자 증가</div></div>
-      </div>
-      <div class="proj-arrow">↗</div>
-    </a>
-
-    <div class="proj-card reveal reveal-d2">
-      <div class="proj-header">
-        <span class="proj-tag">Automation · Ops</span>
-        <span class="proj-role solo">단독 설계</span>
-      </div>
-      <h3 class="proj-name">마케팅<br>자동화 시스템</h3>
-      <p class="proj-desc">예매 데이터 → CRM 자동 업데이트, 조건부 리마인드 발송, SNS 콘텐츠 스케줄 자동 발행 등 Zapier 기반 파이프라인을 설계·구축했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">95%</div><div class="proj-stat-key">반복업무 단축</div></div>
-        <div class="proj-stat"><div class="proj-stat-val">40%</div><div class="proj-stat-key">운영팀 업무 감소</div></div>
-      </div>
+    <div class="proj-card">
+      <span class="proj-tag">Viral · SNS</span>
+      <span class="proj-role solo">단독 기획</span>
+      <h3 class="proj-name">NONOL 바이럴 캠페인</h3>
+      <p class="proj-desc">제한된 예산에서 공유하고 싶은 스토리텔링으로 유기적 바이럴을 설계.</p>
+      <div class="proj-stats"><div class="proj-stat"><div class="proj-stat-val">220만</div><div class="proj-stat-key">도달</div></div></div>
     </div>
   </div>
-
-  <!-- Last row merged into same grid system -->
   <div class="proj-grid proj-grid-2col">
-    <div class="proj-card reveal" style="border-top:1px solid var(--border);border-left:1px solid var(--border);">
-      <div class="proj-header">
-        <span class="proj-tag">Event · Culture</span>
-        <span class="proj-role">파트너십</span>
-      </div>
-      <h3 class="proj-name">샌딩유×MONOPLEX<br>단편영화제</h3>
-      <p class="proj-desc">파트너십 크로스 프로모션과 영화 제작자 커뮤니티 타겟팅으로, MONOPLEX를 단순 상영관이 아닌 문화 큐레이션 공간으로 포지셔닝한 이벤트를 기획·운영했습니다.</p>
+    <div class="proj-card">
+      <span class="proj-tag">B2B · Positioning</span>
+      <span class="proj-role solo">단독 전략</span>
+      <h3 class="proj-name">RYSE B2B 대관 포지셔닝</h3>
+      <p class="proj-desc">인지도 낮은 공간을 "프리미엄 이벤트 공간"으로 재포지셔닝. 기업 행사·시사회 수요 직접 창출.</p>
+      <div class="proj-stats"><div class="proj-stat"><div class="proj-stat-val">5×</div><div class="proj-stat-key">대관 증가</div></div><div class="proj-stat"><div class="proj-stat-val">월 15건</div><div class="proj-stat-key">3건→15건</div></div></div>
     </div>
-    <div class="proj-card reveal reveal-d1" style="border-top:1px solid var(--border);border-left:1px solid var(--border);">
-      <div class="proj-header">
-        <span class="proj-tag">Growth · Data</span>
-        <span class="proj-role solo">단독 운영</span>
+    <a href="https://www.monoplex.com" target="_blank" class="proj-card">
+      <span class="proj-tag">UX · Data</span>
+      <span class="proj-role solo">기획·실행</span>
+      <h3 class="proj-name">홈페이지 UX 개편</h3>
+      <p class="proj-desc">GA4로 퍼널 이탈 구간을 특정하고, 예매 플로우 간소화·모바일 최적화를 직접 기획·실행.</p>
+      <div class="proj-stats"><div class="proj-stat"><div class="proj-stat-val">200%+</div><div class="proj-stat-key">방문자 증가</div></div></div>
+      <span class="proj-arrow">↗</span>
+    </a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- STORY -->
+<section class="section" id="story">
+  <div class="story">
+    <div>
+      <div class="section-label">Career</div>
+      <div class="timeline" style="margin-top:32px;">
+        <div class="timeline-item current"><div class="timeline-dot"></div><div><div class="timeline-period">2024.09 — 현재</div><div class="timeline-role">마케팅 총괄</div><div class="timeline-company">RNR · MONOPLEX</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">이전</div><div class="timeline-role">브랜드 마케터</div><div class="timeline-company">카미디어 (중고차)</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">이전</div><div class="timeline-role">촬영감독</div><div class="timeline-company">TY필름</div></div></div>
       </div>
-      <h3 class="proj-name">일일 데이터 기반<br>그로스 루틴</h3>
-      <p class="proj-desc">매일 매출→관람객→흥행작→콘텐츠 순서로 데이터를 확인하고 당일 마케팅 방향을 결정합니다. Garnet으로 이 루틴의 대부분을 반자동화했습니다.</p>
-      <div class="proj-stats">
-        <div class="proj-stat"><div class="proj-stat-val">90%+</div><div class="proj-stat-key">재방문율</div></div>
-        <div class="proj-stat"><div class="proj-stat-val">60%+</div><div class="proj-stat-key">동일고객 예매율 증가</div></div>
+    </div>
+    <div>
+      <h2 class="story-headline">혼자였기 때문에<br><em>시스템을 만들었습니다.</em></h2>
+      <div class="story-body">
+        <p>30개 지점의 마케팅 전체를 1인으로 담당하고 있습니다. 팀도 대행사도 없이 브랜드 전략부터 GA4 분석, CRM, 콘텐츠, 이벤트까지 모두 직접 합니다.</p>
+        <p>이 제약이 오히려 <strong>자동화와 AI에 깊이 파고드는 계기가 됐습니다.</strong> 반복 업무는 Zapier로 자동화하고, 데이터 분석은 GA4 API로 자동화하고, 인사이트 도출은 AI에게 맡겼습니다.</p>
+        <p>촬영감독 출신이라 영상 감각이 있고, 중고차 브랜드에서 쌓은 소비자 심리 이해가 <strong>지금의 콘텐츠 전략과 퍼널 설계에 살아있습니다.</strong></p>
+        <div class="story-highlight">
+          <p>도구가 없으면 만들고, 방법이 없으면 찾습니다.<br><strong>안 되면 되게 합니다.</strong></p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- STORY + TIMELINE -->
-<section class="story" id="story">
-  <div class="story-sidebar reveal">
-    <span class="section-eyebrow">Career</span>
-    <div class="timeline">
-      <div class="timeline-item current">
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-period">2024.09 — 현재</div>
-          <div class="timeline-role">마케팅 프로</div>
-          <div class="timeline-company">RNR · MONOPLEX</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-period">이전</div>
-          <div class="timeline-role">촬영감독</div>
-          <div class="timeline-company">TY필름</div>
-        </div>
-      </div>
-      <div class="timeline-item">
-        <div class="timeline-dot"></div>
-        <div class="timeline-body">
-          <div class="timeline-period">이전</div>
-          <div class="timeline-role">브랜드 마케터</div>
-          <div class="timeline-company">카미디어 (중고차)</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="story-main">
-    <h2 class="story-headline reveal">
-      혼자였기 때문에<br>
-      <em>시스템을 만들었습니다.</em>
-    </h2>
-    <div class="story-body reveal">
-      <p>
-        RNR에서 MONOPLEX 브랜드 마케팅 전체를 1인으로 전담하고 있습니다.<br>
-        팀도, 대행사도 없이 브랜드 전략부터 디지털 광고, SNS, CRM,<br>
-        콘텐츠 제작, 이벤트 기획까지 — 모두 혼자 담당하는 구조였습니다.
-      </p>
-      <p>
-        이 제약이 오히려 <strong>자동화와 AI에 깊이 파고드는 계기가 됐습니다.</strong><br>
-        Zapier로 반복 업무 파이프라인을 구축하고,<br>
-        Claude Code로 데이터 분석 도구 Garnet을 직접 제작했습니다.
-      </p>
-      <p>
-        TY필름 촬영감독 출신이라 영상·시각 감각이 있고,<br>
-        카미디어 중고차 브랜드에서 쌓은 소비자 심리 이해가<br>
-        <strong>지금의 콘텐츠 전략과 광고 운영에 그대로 살아있습니다.</strong>
-      </p>
-      <div class="story-highlight">
-        <p>
-          단순히 AI를 <em>사용하는</em> 마케터가 아니라,<br>
-          AI로 <strong>직접 도구를 만드는</strong> 마케터입니다.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
+<div class="divider"></div>
 
 <!-- SKILLS -->
-<div class="divider"></div>
-<section class="skills">
-  <span class="section-eyebrow reveal">Skills & Tools</span>
-  <div class="skills-grid">
-    <div class="skill-group reveal reveal-d1">
-      <span class="skill-group-label">AI · Automation</span>
-      <div class="skill-list">
-        <div class="skill-item">Garnet AI 자체 개발 (Claude Code)</div>
-        <div class="skill-item">Zapier 자동화 파이프라인 설계</div>
-        <div class="skill-item">API 연동 · 데이터 파이프라인</div>
-        <div class="skill-item">AI 도구 업무 내재화 및 적용</div>
-      </div>
+<section class="section">
+  <div class="section-label">Skills & Tools</div>
+  <div class="skills-grid" style="margin-top:40px;">
+    <div>
+      <div class="skill-group-label">AI · Automation</div>
+      <div class="skill-item">Garnet AI 시스템 직접 설계</div>
+      <div class="skill-item">GA4 / GTM API 자동화</div>
+      <div class="skill-item">Zapier 파이프라인 설계</div>
+      <div class="skill-item">Claude Code 활용</div>
     </div>
-    <div class="skill-group reveal reveal-d2">
-      <span class="skill-group-label">Performance Marketing</span>
-      <div class="skill-list">
-        <div class="skill-item">Meta Ads 운영 및 ROAS 최적화</div>
-        <div class="skill-item">GA4 분석 · 전환 퍼널 설계</div>
-        <div class="skill-item">A/B 테스트 · 타겟 오디언스 세분화</div>
-        <div class="skill-item">CRM · 카카오 비즈니스 채널 운영</div>
-      </div>
+    <div>
+      <div class="skill-group-label">Performance</div>
+      <div class="skill-item">GA4 퍼널 분석 · 전환 최적화</div>
+      <div class="skill-item">채널별 ROI 분석</div>
+      <div class="skill-item">A/B 테스트 설계</div>
+      <div class="skill-item">CRM · 카카오 비즈니스</div>
     </div>
-    <div class="skill-group reveal reveal-d3">
-      <span class="skill-group-label">Growth Strategy</span>
-      <div class="skill-list">
-        <div class="skill-item">그로스 마케팅 전략 수립</div>
-        <div class="skill-item">서비스 기획 (MONOCAST)</div>
-        <div class="skill-item">B2B 포지셔닝 · 파트너십 마케팅</div>
-        <div class="skill-item">데이터 기반 의사결정</div>
-      </div>
+    <div>
+      <div class="skill-group-label">Growth Strategy</div>
+      <div class="skill-item">그로스 마케팅 전략</div>
+      <div class="skill-item">서비스 기획 (MONOCAST)</div>
+      <div class="skill-item">B2B 포지셔닝 · 파트너십</div>
+      <div class="skill-item">데이터 기반 의사결정</div>
     </div>
-    <div class="skill-group reveal reveal-d4">
-      <span class="skill-group-label">Content · Creative</span>
-      <div class="skill-list">
-        <div class="skill-item">Adobe CC (Photoshop · Premiere Pro)</div>
-        <div class="skill-item">영상 촬영 · 편집 (촬영감독 출신)</div>
-        <div class="skill-item">SNS 콘텐츠 기획 및 카피라이팅</div>
-        <div class="skill-item">브랜드 아이덴티티 설계</div>
-      </div>
+    <div>
+      <div class="skill-group-label">Content · Creative</div>
+      <div class="skill-item">영상 촬영·편집 (촬영감독 출신)</div>
+      <div class="skill-item">Adobe Premiere · Photoshop</div>
+      <div class="skill-item">SNS 콘텐츠 기획</div>
+      <div class="skill-item">브랜드 아이덴티티 설계</div>
     </div>
   </div>
 </section>
+
 <div class="divider"></div>
 
 <!-- VISION -->
-<section class="vision" id="vision">
-  <div class="vision-left">
-    <span class="section-eyebrow reveal">Vision</span>
-    <h2 class="vision-headline reveal">
-      마케터가 아닌<br>
-      <em>AX Pro를<br>향해.</em>
-    </h2>
-  </div>
-  <div class="vision-right">
-    <blockquote class="vision-quote reveal">
-      "AI를 <em>쓰는</em> 마케터와<br>AI로 <em>만드는</em> 마케터는 다릅니다.<br>
-      저는 후자입니다."
-    </blockquote>
-    <div class="vision-list">
-      <div class="vision-item reveal">
-        <span class="vision-num">01</span>
-        <p class="vision-text"><strong>마케터가 직접 도구를 만들 수 있습니다.</strong> Claude Code로 Garnet을 제작한 것은 "AI로 뭔가를 만들 수 있다"는 가능성을 직접 증명한 경험입니다. 개발자 없이도 필요한 것을 만들어냅니다.</p>
-      </div>
-      <div class="vision-item reveal reveal-d1">
-        <span class="vision-num">02</span>
-        <p class="vision-text"><strong>매일 GitHub을 탐색하며 AI 트렌드를 흡수합니다.</strong> 개발자가 아니어도 어떤 기술이 가능한지 파악하고, 마케팅 업무에 바로 연결하는 시각을 가집니다.</p>
-      </div>
-      <div class="vision-item reveal reveal-d2">
-        <span class="vision-num">03</span>
-        <p class="vision-text"><strong>비즈니스 맥락을 이해하는 AI 활용이 핵심입니다.</strong> 도구를 잘 쓰는 것보다, 어떤 문제를 어떻게 풀어야 할지 판단하는 것이 더 중요합니다. 마케팅 전략과 AI 실행을 함께 설계합니다.</p>
-      </div>
-      <div class="vision-item reveal reveal-d3">
-        <span class="vision-num">04</span>
-        <p class="vision-text"><strong>Garnet을 외부 마케터들도 쓸 수 있는 툴로 키우고 싶습니다.</strong> 1인 마케터로 겪은 문제를 시스템으로 만들어 공유하는 것이 다음 목표입니다.</p>
+<section class="section" id="vision">
+  <div class="vision-grid">
+    <div>
+      <div class="section-label">Vision</div>
+      <h2 class="vision-headline">데이터를 읽고,<br><em>고객을<br>이해하는 일.</em></h2>
+    </div>
+    <div>
+      <blockquote class="vision-quote">"숫자를 보는 이유는 숫자 자체가 아니라,<br>그 뒤에 있는 사람을 이해하기 위해서입니다."</blockquote>
+      <div>
+        <div class="vision-item"><span class="vision-num">01</span><p class="vision-text"><strong>도구가 없으면 만듭니다.</strong> Claude Code로 마케팅 AI 시스템을 직접 설계했습니다. 개발자 없이도 필요한 것을 만들어냅니다.</p></div>
+        <div class="vision-item"><span class="vision-num">02</span><p class="vision-text"><strong>반복은 자동화하고, 고민에 집중합니다.</strong> 퍼포먼스는 AI와 자동화로 빠르게 처리하고, 고객이 진짜 원하는 게 무엇인지 생각하는 데 시간을 씁니다.</p></div>
+        <div class="vision-item"><span class="vision-num">03</span><p class="vision-text"><strong>비즈니스 맥락을 이해하는 AI 활용.</strong> 도구를 잘 쓰는 것보다, 어떤 문제를 어떻게 풀어야 할지 판단하는 것이 더 중요합니다.</p></div>
+        <div class="vision-item"><span class="vision-num">04</span><p class="vision-text"><strong>성장하는 시장에서 더 큰 문제를 풀고 싶습니다.</strong> 제한된 환경에서 쌓은 경험을, 더 큰 볼륨과 더 빠른 성장 속에서 써보고 싶습니다.</p></div>
       </div>
     </div>
   </div>
 </section>
 
+<div class="divider"></div>
+
 <!-- CONTACT -->
-<section class="contact" id="contact">
-  <h2 class="contact-headline reveal">
-    함께<br>
-    일하고<br>
-    <em>싶으시다면.</em>
-  </h2>
-  <div class="contact-right">
-    <div class="contact-row reveal">
-      <div class="contact-label">Email</div>
-      <a href="mailto:jjhtv@kakao.com" class="contact-val">jjhtv@kakao.com</a>
+<section class="section" id="contact">
+  <div class="contact-grid">
+    <h2 class="contact-headline">함께 일하고<br><em>싶으시다면.</em></h2>
+    <div>
+      <div class="contact-row"><div class="contact-label">Email</div><a href="mailto:jjhtv@kakao.com" class="contact-val">jjhtv@kakao.com</a></div>
+      <div class="contact-row"><div class="contact-label">GitHub</div><a href="https://github.com/mark02252/garnet-ai" target="_blank" class="contact-val">github.com/mark02252/garnet-ai</a></div>
+      <div class="contact-row"><div class="contact-label">LinkedIn</div><a href="https://www.linkedin.com/in/jung-jaeho-9a72a3325" target="_blank" class="contact-val">linkedin.com/in/jung-jaeho</a></div>
+      <a href="mailto:jjhtv@kakao.com" class="contact-btn">이메일 보내기 →</a>
     </div>
-    <div class="contact-row reveal reveal-d1">
-      <div class="contact-label">GitHub</div>
-      <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="contact-val">github.com/mark02252/garnet-ai</a>
-    </div>
-    <div class="contact-row reveal reveal-d2">
-      <div class="contact-label">Currently</div>
-      <span class="contact-val">RNR · MONOPLEX — 마케팅 전담</span>
-    </div>
-    <a href="mailto:jjhtv@kakao.com" class="contact-btn reveal reveal-d3">
-      이메일 보내기 →
-    </a>
   </div>
 </section>
 
 <!-- FOOTER -->
 <footer>
-  <span>© 2026 정재호 · Jaeho Jung</span>
-  <span>AI-driven Growth Marketing Lead</span>
+  <span>© 2026 정재호</span>
+  <span>Growth Marketer</span>
 </footer>
 
-<!-- Custom Cursor -->
-<div class="c-dot" id="cDot"></div>
-<div class="c-ring" id="cRing"></div>
-
-<!-- GSAP + Plugins (load before main script) -->
+<!-- GSAP -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollToPlugin.min.js"></script>
-<!-- Fallback: if GSAP fails to load, show all content -->
-<noscript><style>.reveal{opacity:1!important;transform:none!important;}</style></noscript>
 <script>
-if (typeof gsap === 'undefined') {
-  // GSAP failed to load — make everything visible
-  document.querySelectorAll('.reveal').forEach(el => { el.style.opacity = 1; el.style.transform = 'none'; });
-} else {
+gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-gsap.registerPlugin(ScrollTrigger);
-
-// ── Custom Cursor (unchanged) ──
-(function() {
-  const dot = document.getElementById('cDot');
-  const ring = document.getElementById('cRing');
-  if (!dot || !ring) return;
-  let mx = -100, my = -100, rx = -100, ry = -100;
-  document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-  document.querySelectorAll('a, button, [data-gtab]').forEach(el => {
-    el.addEventListener('mouseenter', () => ring.classList.add('hovering'));
-    el.addEventListener('mouseleave', () => ring.classList.remove('hovering'));
-  });
-  (function loop() {
-    rx += (mx - rx) * 0.12;
-    ry += (my - ry) * 0.12;
-    dot.style.left = mx + 'px';
-    dot.style.top  = my + 'px';
-    ring.style.left = rx + 'px';
-    ring.style.top  = ry + 'px';
-    requestAnimationFrame(loop);
-  })();
-})();
-
-// ── Nav scroll + active section ──
+// Nav scroll
 const nav = document.getElementById('nav');
-const navLinks = document.querySelectorAll('.nav-links a[href^="#"]');
-const sectionIds = ['projects', 'story', 'vision', 'contact'];
+ScrollTrigger.create({ start: 50, onUpdate: s => nav.classList.toggle('scrolled', s.scroll() > 50) });
 
-sectionIds.forEach(id => {
-  const el = document.getElementById(id);
-  if (!el) return;
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 60%',
-    end: 'bottom 40%',
-    onEnter: () => setActiveNav(id),
-    onEnterBack: () => setActiveNav(id),
-  });
+// Hero entrance
+gsap.from('.hero-tag', { y: 20, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power3.out' });
+gsap.from('.hero-name', { y: 40, opacity: 0, duration: 1, delay: 0.2, ease: 'power3.out' });
+gsap.from('.hero-desc', { y: 30, opacity: 0, duration: 0.8, delay: 0.4, ease: 'power3.out' });
+gsap.from('.hero-bottom', { y: 20, opacity: 0, duration: 0.6, delay: 0.6, ease: 'power3.out' });
+
+// Hero parallax
+gsap.to('.hero-name', { yPercent: 15, opacity: 0.4, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+
+// Metrics
+document.querySelectorAll('.metric').forEach((el, i) => {
+  gsap.from(el, { y: 40, opacity: 0, duration: 0.7, delay: i * 0.08, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } });
 });
 
-function setActiveNav(id) {
-  navLinks.forEach(link => {
-    link.classList.toggle('active', link.getAttribute('href') === '#' + id);
-  });
-}
-
-ScrollTrigger.create({
-  start: 50,
-  onUpdate: (self) => {
-    nav.classList.toggle('scrolled', self.scroll() > 50);
-  },
-});
-
-// ── HERO PARALLAX ──
-gsap.to('.hero-grid-bg', {
-  yPercent: 40,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: true,
-  },
-});
-
-gsap.to('.hero-name-wrap', {
-  yPercent: 25,
-  opacity: 0.3,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero',
-    start: 'top top',
-    end: 'bottom top',
-    scrub: true,
-  },
-});
-
-gsap.to('.hero-bottombar', {
-  yPercent: -15,
-  opacity: 0,
-  ease: 'none',
-  scrollTrigger: {
-    trigger: '.hero',
-    start: '60% top',
-    end: 'bottom top',
-    scrub: true,
-  },
-});
-
-// Hero tag entrance
-gsap.from('.hero-tag', {
-  y: 20, opacity: 0,
-  duration: 0.8, delay: 0.1,
-  ease: 'power3.out',
-});
-
-// ── MARQUEE SPEED ON SCROLL ──
-const marqueeInner = document.querySelector('.marquee-inner');
-if (marqueeInner) {
-  ScrollTrigger.create({
-    trigger: '.marquee-wrap',
-    start: 'top bottom',
-    end: 'bottom top',
-    onUpdate: (self) => {
-      const speed = 30 - (self.progress * 15);
-      marqueeInner.style.animationDuration = speed + 's';
-    },
-  });
-}
-
-// ── METRICS COUNTER (GSAP) ──
-document.querySelectorAll('.metric').forEach((metric, i) => {
-  gsap.from(metric, {
-    y: 60, opacity: 0,
-    duration: 0.8,
-    delay: i * 0.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: metric,
-      start: 'top 85%',
-      toggleActions: 'play none none none',
-    },
-  });
-});
-
+// Counter
 document.querySelectorAll('.counter').forEach(el => {
   const target = parseFloat(el.dataset.target);
   const isDecimal = el.dataset.decimal === 'true';
   const obj = { val: 0 };
-
-  ScrollTrigger.create({
-    trigger: el,
-    start: 'top 85%',
-    once: true,
-    onEnter: () => {
-      gsap.to(obj, {
-        val: target,
-        duration: 2,
-        ease: 'power2.out',
-        onUpdate: () => {
-          el.textContent = isDecimal ? obj.val.toFixed(1) : Math.floor(obj.val);
-        },
-        onComplete: () => {
-          el.textContent = isDecimal ? target.toFixed(1) : target;
-        },
-      });
-    },
-  });
-});
-
-// ── SCROLL REVEAL (GSAP replaces IntersectionObserver) ──
-document.querySelectorAll('.reveal').forEach((el, i) => {
-  gsap.from(el, {
-    y: 48,
-    opacity: 0,
-    duration: 0.9,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 88%',
-      toggleActions: 'play none none none',
-    },
-  });
-});
-
-// ── EDITORIAL HEADLINE — clip reveal on scroll ──
-document.querySelectorAll('.editorial-hl').forEach(el => {
-  gsap.from(el, {
-    clipPath: 'inset(0 0 100% 0)',
-    y: 30,
-    opacity: 0,
-    duration: 1.2,
-    ease: 'power4.out',
-    scrollTrigger: {
-      trigger: el,
-      start: 'top 85%',
-      toggleActions: 'play none none none',
-    },
-  });
-});
-
-// ── STORY SECTION — staggered reveal ──
-gsap.from('.story-headline', {
-  clipPath: 'inset(0 0 100% 0)',
-  y: 40,
-  opacity: 0,
-  duration: 1.2,
-  ease: 'power4.out',
-  scrollTrigger: {
-    trigger: '.story',
-    start: 'top 70%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.story-body p', {
-  y: 30,
-  opacity: 0,
-  duration: 0.8,
-  stagger: 0.15,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.story-body',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.story-highlight', {
-  x: -40,
-  opacity: 0,
-  duration: 0.8,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.story-highlight',
-    start: 'top 85%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// Timeline items stagger
-gsap.from('.timeline-item', {
-  x: -20,
-  opacity: 0,
-  duration: 0.6,
-  stagger: 0.12,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.timeline',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// ── PROJECT CARDS — 3D TILT on hover ──
-document.querySelectorAll('.proj-card, .proj-featured').forEach(card => {
-  card.addEventListener('mousemove', (e) => {
-    const rect = card.getBoundingClientRect();
-    const x = (e.clientX - rect.left) / rect.width - 0.5;
-    const y = (e.clientY - rect.top) / rect.height - 0.5;
-    gsap.to(card, {
-      rotateY: x * 8,
-      rotateX: -y * 8,
-      transformPerspective: 800,
-      duration: 0.4,
-      ease: 'power2.out',
+  ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => {
+    gsap.to(obj, { val: target, duration: 2, ease: 'power2.out',
+      onUpdate: () => { el.textContent = isDecimal ? obj.val.toFixed(1) : Math.floor(obj.val); },
+      onComplete: () => { el.textContent = isDecimal ? target.toFixed(1) : target; }
     });
+  }});
+});
+
+// Section titles
+document.querySelectorAll('.section-title, .story-headline, .vision-headline, .contact-headline').forEach(el => {
+  gsap.from(el, { y: 40, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none none' } });
+});
+
+// Project cards
+document.querySelectorAll('.proj-card, .proj-featured').forEach((el, i) => {
+  gsap.from(el, { y: 50, opacity: 0, duration: 0.8, delay: (i % 3) * 0.08, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' } });
+  // 3D tilt
+  el.addEventListener('mousemove', e => {
+    const r = el.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    gsap.to(el, { rotateY: x * 5, rotateX: -y * 5, transformPerspective: 800, duration: 0.3, ease: 'power2.out' });
   });
-
-  card.addEventListener('mouseleave', () => {
-    gsap.to(card, {
-      rotateY: 0,
-      rotateX: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    });
-  });
+  el.addEventListener('mouseleave', () => { gsap.to(el, { rotateY: 0, rotateX: 0, duration: 0.5, ease: 'power2.out' }); });
 });
 
-// Project cards scroll entrance
-document.querySelectorAll('.proj-card').forEach((card, i) => {
-  gsap.from(card, {
-    y: 60,
-    opacity: 0,
-    duration: 0.8,
-    delay: (i % 3) * 0.1,
-    ease: 'power3.out',
-    scrollTrigger: {
-      trigger: card,
-      start: 'top 88%',
-      toggleActions: 'play none none none',
-    },
-  });
+// Story
+gsap.from('.story-body p', { y: 25, opacity: 0, duration: 0.7, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: '.story-body', start: 'top 82%', toggleActions: 'play none none none' } });
+gsap.from('.story-highlight', { x: -30, opacity: 0, duration: 0.7, ease: 'power3.out', scrollTrigger: { trigger: '.story-highlight', start: 'top 88%', toggleActions: 'play none none none' } });
+gsap.from('.timeline-item', { x: -15, opacity: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.timeline', start: 'top 82%', toggleActions: 'play none none none' } });
+
+// Skills
+gsap.from('.skills-grid > div', { y: 30, opacity: 0, duration: 0.6, stagger: 0.1, ease: 'power3.out', scrollTrigger: { trigger: '.skills-grid', start: 'top 82%', toggleActions: 'play none none none' } });
+
+// Vision
+gsap.from('.vision-quote', { x: 30, opacity: 0, duration: 0.8, ease: 'power3.out', scrollTrigger: { trigger: '.vision-quote', start: 'top 85%', toggleActions: 'play none none none' } });
+gsap.from('.vision-item', { y: 25, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'power3.out', scrollTrigger: { trigger: '.vision-item', start: 'top 88%', toggleActions: 'play none none none' } });
+
+// Contact
+gsap.from('.contact-row', { x: 25, opacity: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out', scrollTrigger: { trigger: '.contact-grid', start: 'top 80%', toggleActions: 'play none none none' } });
+
+// Dividers
+document.querySelectorAll('.divider').forEach(el => {
+  gsap.from(el, { scaleX: 0, transformOrigin: 'left', duration: 0.8, ease: 'power3.inOut', scrollTrigger: { trigger: el, start: 'top 92%', toggleActions: 'play none none none' } });
 });
 
-// Featured project entrance
-gsap.from('.proj-featured', {
-  y: 80,
-  opacity: 0,
-  scale: 0.97,
-  duration: 1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.proj-featured',
-    start: 'top 85%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// ── GARNET MOCKUP — glow on scroll ──
-const mockupEl = document.querySelector('.garnet-mockup');
-if (mockupEl) {
-  mockupEl.classList.add('glow-on-scroll');
-  ScrollTrigger.create({
-    trigger: mockupEl,
-    start: 'top 70%',
-    end: 'bottom 30%',
-    onEnter: () => mockupEl.classList.add('glowing'),
-    onLeave: () => mockupEl.classList.remove('glowing'),
-    onEnterBack: () => mockupEl.classList.add('glowing'),
-    onLeaveBack: () => mockupEl.classList.remove('glowing'),
-  });
-}
-
-// ── SKILLS SECTION — stagger in ──
-gsap.from('.skill-group', {
-  y: 40,
-  opacity: 0,
-  duration: 0.7,
-  stagger: 0.12,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.skills-grid',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// ── VISION SECTION — cinematic entrance ──
-gsap.from('.vision-headline', {
-  clipPath: 'inset(0 0 100% 0)',
-  y: 50,
-  opacity: 0,
-  duration: 1.4,
-  ease: 'power4.out',
-  scrollTrigger: {
-    trigger: '.vision',
-    start: 'top 65%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.vision-quote', {
-  x: 40,
-  opacity: 0,
-  duration: 1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.vision-quote',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.vision-item', {
-  y: 30,
-  opacity: 0,
-  duration: 0.7,
-  stagger: 0.15,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.vision-list',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// ── CONTACT SECTION — dramatic entrance ──
-gsap.from('.contact-headline', {
-  clipPath: 'inset(0 0 100% 0)',
-  y: 60,
-  opacity: 0,
-  duration: 1.4,
-  ease: 'power4.out',
-  scrollTrigger: {
-    trigger: '.contact',
-    start: 'top 65%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.contact-row', {
-  x: 30,
-  opacity: 0,
-  duration: 0.6,
-  stagger: 0.1,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.contact-right',
-    start: 'top 80%',
-    toggleActions: 'play none none none',
-  },
-});
-
-gsap.from('.contact-btn', {
-  y: 20,
-  opacity: 0,
-  duration: 0.8,
-  delay: 0.3,
-  ease: 'power3.out',
-  scrollTrigger: {
-    trigger: '.contact-btn',
-    start: 'top 90%',
-    toggleActions: 'play none none none',
-  },
-});
-
-// ── DIVIDER LINES — horizontal reveal ──
-document.querySelectorAll('.divider').forEach(line => {
-  gsap.from(line, {
-    scaleX: 0,
-    transformOrigin: 'left center',
-    duration: 1,
-    ease: 'power3.inOut',
-    scrollTrigger: {
-      trigger: line,
-      start: 'top 90%',
-      toggleActions: 'play none none none',
-    },
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener('click', e => {
+    const t = document.querySelector(link.getAttribute('href'));
+    if (t) { e.preventDefault(); gsap.to(window, { scrollTo: { y: t, offsetY: 80 }, duration: 1, ease: 'power3.inOut' }); }
   });
 });
 
-// ── SECTION BORDERS — subtle reveal ──
-document.querySelectorAll('.metrics-strip, .skills, .vision, .contact').forEach(section => {
-  gsap.from(section, {
-    borderColor: 'rgba(240,237,248,0)',
-    duration: 1.2,
-    ease: 'power2.out',
-    scrollTrigger: {
-      trigger: section,
-      start: 'top 85%',
-      toggleActions: 'play none none none',
-    },
-  });
-});
-
-// ── GARNET MOCKUP TAB AUTO-CYCLE (unchanged logic) ──
+// Garnet tabs
 (function() {
   const tabs = document.querySelectorAll('.g-tab');
   const screens = document.querySelectorAll('.g-screen');
-  let current = 0;
-  let timer;
-
-  function switchTo(idx) {
-    tabs.forEach(t => t.classList.remove('active'));
-    screens.forEach(s => s.classList.remove('active'));
-    tabs[idx].classList.add('active');
-    screens[idx].classList.add('active');
-    current = idx;
-  }
-
-  function autoNext() {
-    timer = setTimeout(() => {
-      switchTo((current + 1) % tabs.length);
-      autoNext();
-    }, 4000);
-  }
-
-  tabs.forEach((tab, i) => {
-    tab.addEventListener('click', (e) => {
-      e.preventDefault();
-      clearTimeout(timer);
-      switchTo(i);
-      autoNext();
-    });
-  });
-
-  const mockup = document.querySelector('.garnet-mockup');
-  if (mockup) {
-    ScrollTrigger.create({
-      trigger: mockup,
-      start: 'top 70%',
-      once: true,
-      onEnter: () => autoNext(),
-    });
-  }
+  let cur = 0, timer;
+  function sw(i) { tabs.forEach(t => t.classList.remove('active')); screens.forEach(s => s.classList.remove('active')); tabs[i].classList.add('active'); screens[i].classList.add('active'); cur = i; }
+  function auto() { timer = setTimeout(() => { sw((cur + 1) % tabs.length); auto(); }, 4000); }
+  tabs.forEach((t, i) => t.addEventListener('click', e => { e.preventDefault(); clearTimeout(timer); sw(i); auto(); }));
+  const m = document.querySelector('.garnet-mockup');
+  if (m) ScrollTrigger.create({ trigger: m, start: 'top 70%', once: true, onEnter: () => auto() });
 })();
-
-// ── SMOOTH SCROLL for nav links ──
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const target = document.querySelector(link.getAttribute('href'));
-    if (target) {
-      e.preventDefault();
-      gsap.to(window, {
-        scrollTo: { y: target, offsetY: 80 },
-        duration: 1,
-        ease: 'power3.inOut',
-      });
-    }
-  });
-});
-
-} // end GSAP check
 </script>
 </body>
 </html>
