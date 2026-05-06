@@ -126,6 +126,18 @@
       line-height: 1; color: var(--text);
       margin-bottom: 12px;
     }
+    .metric-bar {
+      width: 100%; height: 4px;
+      background: var(--border); border-radius: 2px;
+      margin: 16px 0 12px; overflow: hidden;
+    }
+    .metric-bar-fill {
+      height: 100%; border-radius: 2px;
+      background: var(--text);
+      width: 0%;
+      transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .metric-bar-fill.animated { width: var(--fill); }
     .metric-desc { font-size: 15px; color: var(--text-sub); font-weight: 400; }
     .metric-source { font-size: 11px; color: var(--text-dim); margin-top: 6px; letter-spacing: 0.06em; }
 
@@ -451,32 +463,38 @@
 <!-- METRICS -->
 <div class="metrics" id="metrics">
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="90">0</span>%+</div>
+    <div class="metric-num"><span class="counter" data-target="90">90</span>%+</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:90%"></div></div>
     <div class="metric-desc">재방문율 달성</div>
     <div class="metric-source">CRM · 콘텐츠 전략</div>
   </div>
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="95">0</span>%</div>
+    <div class="metric-num"><span class="counter" data-target="95">95</span>%</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:95%"></div></div>
     <div class="metric-desc">반복업무 자동화 단축</div>
     <div class="metric-source">AI · Zapier · Garnet</div>
   </div>
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="2" data-decimal="true">0</span>.8×</div>
+    <div class="metric-num">2.8×</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:70%"></div></div>
     <div class="metric-desc">전환율 상승</div>
     <div class="metric-source">카카오 채널 리브랜딩</div>
   </div>
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="220">0</span>만</div>
+    <div class="metric-num"><span class="counter" data-target="220">220</span>만</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:85%"></div></div>
     <div class="metric-desc">바이럴 캠페인 도달</div>
     <div class="metric-source">NONOL 캠페인</div>
   </div>
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="300">0</span>%</div>
-    <div class="metric-desc">B2B 대관 매출 성장</div>
+    <div class="metric-num">5×</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:80%"></div></div>
+    <div class="metric-desc">B2B 대관 성장</div>
     <div class="metric-source">월 3건 → 15건</div>
   </div>
   <div class="metric">
-    <div class="metric-num"><span class="counter" data-target="200">0</span>%+</div>
+    <div class="metric-num"><span class="counter" data-target="200">200</span>%+</div>
+    <div class="metric-bar"><div class="metric-bar-fill" style="--fill:75%"></div></div>
     <div class="metric-desc">홈페이지 방문자 증가</div>
     <div class="metric-source">UX 전면 개편</div>
   </div>
@@ -594,9 +612,10 @@
     <div>
       <div class="section-label">Career</div>
       <div class="timeline" style="margin-top:32px;">
-        <div class="timeline-item current"><div class="timeline-dot"></div><div><div class="timeline-period">2024.09 — 현재</div><div class="timeline-role">마케팅 총괄</div><div class="timeline-company">RNR · MONOPLEX</div></div></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">이전</div><div class="timeline-role">브랜드 마케터</div><div class="timeline-company">카미디어 (중고차)</div></div></div>
-        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">이전</div><div class="timeline-role">촬영감독</div><div class="timeline-company">TY필름</div></div></div>
+        <div class="timeline-item current"><div class="timeline-dot"></div><div><div class="timeline-period">2024 — 현재</div><div class="timeline-role">마케팅 총괄</div><div class="timeline-company">RNR · MONOPLEX (30개 지점)</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">2022 — 2024</div><div class="timeline-role">채널 마케팅 · 크리에이터 협업</div><div class="timeline-company">카미디어 (자동차)</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">2020 — 2022</div><div class="timeline-role">영상 기획 · 촬영감독</div><div class="timeline-company">TY필름 (기업/정부기관)</div></div></div>
+        <div class="timeline-item"><div class="timeline-dot"></div><div><div class="timeline-period">2018 — 2020</div><div class="timeline-role">점장 · 매장 운영</div><div class="timeline-company">하남돼지집 (월매출 1억+)</div></div></div>
       </div>
     </div>
     <div>
@@ -713,14 +732,20 @@ gsap.from('.hero-bottom', { opacity: 0, duration: 0.5, delay: 0.5, ease: 'power2
 document.querySelectorAll('.counter').forEach(el => {
   const target = parseFloat(el.dataset.target);
   const isDecimal = el.dataset.decimal === 'true';
-  const obj = { val: 0 };
-  ScrollTrigger.create({ trigger: el, start: 'top 90%', once: true, onEnter: () => {
-    gsap.to(obj, { val: target, duration: 1.8, ease: 'power2.out',
-      onUpdate: () => { el.textContent = isDecimal ? obj.val.toFixed(1) : Math.floor(obj.val); },
-      onComplete: () => { el.textContent = isDecimal ? target.toFixed(1) : target; }
-    });
-  }});
+  el.textContent = isDecimal ? target.toFixed(1) : target;
 });
+
+// Metric bar fill (스크롤 시 그래프 채워짐)
+const metricBars = document.querySelectorAll('.metric-bar-fill');
+const barObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('animated');
+      barObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+metricBars.forEach(bar => barObserver.observe(bar));
 
 // Card hover 3D tilt (인터랙션만, 등장 애니메이션 없음)
 document.querySelectorAll('.proj-card, .proj-featured').forEach(el => {
