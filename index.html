@@ -108,18 +108,21 @@
     }
 
     /* ── METRICS ── */
+    .metrics-wrap {
+      background: #F0EFE9;
+    }
     .metrics {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      border-top: 1px solid var(--border);
       max-width: 1200px; margin: 0 auto;
     }
     .metric {
       padding: 56px 48px;
-      border-bottom: 1px solid var(--border);
-      border-right: 1px solid var(--border);
+      border-bottom: 1px solid rgba(0,0,0,0.06);
+      border-right: 1px solid rgba(0,0,0,0.06);
     }
     .metric:nth-child(3n) { border-right: none; }
+    .metric:nth-child(4), .metric:nth-child(5), .metric:nth-child(6) { border-bottom: none; }
     .metric-num {
       font-family: 'DM Serif Display', serif;
       font-size: clamp(40px, 5vw, 64px);
@@ -156,6 +159,33 @@
     }
     .section-title em { font-style: italic; color: var(--text-sub); }
     .divider { height: 1px; background: var(--border); max-width: 1200px; margin: 0 auto; }
+
+    /* ── GARNET DARK SECTION ── */
+    .garnet-section {
+      background: #111111;
+      padding: 100px 48px;
+    }
+    .garnet-section-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: center;
+    }
+    .garnet-section .section-label { color: rgba(255,255,255,0.4); }
+    .garnet-section .proj-name { color: #f0edf8; }
+    .garnet-section .proj-tag { color: rgba(255,255,255,0.4); }
+    .garnet-section .proj-role { color: rgba(255,255,255,0.5); border-color: rgba(255,255,255,0.15); }
+    .garnet-section .proj-role.solo { color: #f0edf8; border-color: rgba(255,255,255,0.3); }
+    .garnet-section .proj-desc { color: rgba(255,255,255,0.55); }
+    .garnet-section .proj-stat-val { color: #f0edf8; }
+    .garnet-section .proj-stat-key { color: rgba(255,255,255,0.4); }
+    .garnet-section .garnet-mockup { width: 100%; max-width: 420px; margin: 0 auto; }
+    .garnet-section-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      color: rgba(255,255,255,0.5); font-size: 13px;
+      text-decoration: none; margin-top: 24px;
+      transition: color 0.2s;
+    }
+    .garnet-section-link:hover { color: #f0edf8; }
 
     /* ── PROJECTS ── */
     .proj-featured {
@@ -422,6 +452,8 @@
       .proj-featured { grid-template-columns: 1fr; }
       .proj-featured-visual { min-height: 260px; }
       .proj-grid, .proj-grid-2col { grid-template-columns: 1fr; }
+      .garnet-section { padding: 80px 24px; }
+      .garnet-section-inner { grid-template-columns: 1fr; gap: 40px; }
       .skills-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; }
       .vision-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
       footer { flex-direction: column; gap: 8px; text-align: center; padding: 20px 24px; }
@@ -461,6 +493,7 @@
 </section>
 
 <!-- METRICS -->
+<div class="metrics-wrap">
 <div class="metrics" id="metrics">
   <div class="metric">
     <div class="metric-num"><span class="counter" data-target="90">90</span>%+</div>
@@ -499,26 +532,24 @@
     <div class="metric-source">UX 전면 개편</div>
   </div>
 </div>
+</div><!-- /metrics-wrap -->
 
-<!-- PROJECTS -->
-<section class="section" id="projects">
-  <div class="section-label">Selected Projects</div>
-  <h2 class="section-title">성과가 증명하는 일들.</h2>
-
-  <!-- Featured: Garnet -->
-  <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="proj-featured">
-    <div class="proj-featured-text">
-      <span class="proj-tag">Side Project · AI System</span>
-      <span class="proj-role solo">단독 설계·구축</span>
-      <h3 class="proj-name">Garnet<br>Marketing AI Agent</h3>
-      <p class="proj-desc">5명의 AI 전문가가 24시간 데이터를 분석하고, 스스로 예측을 검증하며 학습하는 마케팅 자동화 시스템. 코딩 경험 없이 Claude Code로 직접 설계·구축. 오픈소스 공개.</p>
-      <div class="proj-stats">
+<!-- GARNET — FULL DARK SECTION -->
+<section class="garnet-section">
+  <div class="garnet-section-inner">
+    <div>
+      <div class="section-label">Side Project</div>
+      <span class="proj-role solo" style="margin-top:16px;">단독 설계·구축 · 오픈소스</span>
+      <h3 class="proj-name" style="margin-top:16px;font-size:clamp(28px,3.5vw,44px);">Garnet<br>Marketing AI Agent</h3>
+      <p class="proj-desc">5명의 AI 전문가가 24시간 데이터를 분석하고, 스스로 예측을 검증하며 학습하는 마케팅 자동화 시스템.<br>코딩 경험 없이 Claude Code로 직접 설계·구축.</p>
+      <div class="proj-stats" style="margin-top:28px;">
         <div class="proj-stat"><div class="proj-stat-val">5인</div><div class="proj-stat-key">AI 전문가 병렬 추론</div></div>
         <div class="proj-stat"><div class="proj-stat-val">400+</div><div class="proj-stat-key">자율 축적 도메인 지식</div></div>
         <div class="proj-stat"><div class="proj-stat-val">24/7</div><div class="proj-stat-key">자율 분석 사이클</div></div>
       </div>
+      <a href="https://github.com/mark02252/garnet-ai" target="_blank" class="garnet-section-link">GitHub에서 보기 ↗</a>
     </div>
-    <div class="proj-featured-visual">
+    <div>
       <div class="garnet-mockup">
         <div class="garnet-titlebar">
           <span class="garnet-dot r"></span><span class="garnet-dot y"></span><span class="garnet-dot g"></span>
@@ -557,8 +588,13 @@
         </div>
       </div>
     </div>
-    <span class="proj-arrow">↗</span>
-  </a>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-label">Selected Projects</div>
+  <h2 class="section-title">성과가 증명하는 일들.</h2>
 
   <!-- Project Grid -->
   <div class="proj-grid">
@@ -635,6 +671,7 @@
 <div class="divider"></div>
 
 <!-- SKILLS -->
+<div style="background:#F0EFE9;">
 <section class="section">
   <div class="section-label">Skills & Tools</div>
   <div class="skills-grid" style="margin-top:40px;">
@@ -668,6 +705,7 @@
     </div>
   </div>
 </section>
+</div><!-- /skills bg -->
 
 <div class="divider"></div>
 
