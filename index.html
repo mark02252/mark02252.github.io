@@ -141,6 +141,13 @@
       transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1);
     }
     .metric-bar-fill.animated { width: var(--fill); }
+
+    /* GSAP 최적화 */
+    .hero-name { will-change: transform, opacity, clip-path; clip-path: inset(0% 0 0 0); }
+    .hero-tag, .hero-desc { will-change: transform, opacity; }
+    .metric { will-change: transform, opacity; }
+    .proj-card, .proj-featured { will-change: transform; }
+    .garnet-mockup { will-change: transform, opacity; }
     .metric-desc { font-size: 15px; color: var(--text-sub); font-weight: 400; }
     .metric-source { font-size: 11px; color: var(--text-dim); margin-top: 6px; letter-spacing: 0.06em; }
 
@@ -756,57 +763,127 @@
 <script>
 gsap.registerPlugin(ScrollTrigger, ScrollToPlugin);
 
-// Nav scroll
+// ── 1. NAV ──
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
 
-// Hero entrance (페이지 로드 시 한 번만)
-gsap.from('.hero-tag', { y: 16, opacity: 0, duration: 0.6, delay: 0.1, ease: 'power2.out' });
-gsap.from('.hero-name', { y: 30, opacity: 0, duration: 0.8, delay: 0.2, ease: 'power2.out' });
-gsap.from('.hero-desc', { y: 20, opacity: 0, duration: 0.6, delay: 0.35, ease: 'power2.out' });
-gsap.from('.hero-bottom', { opacity: 0, duration: 0.5, delay: 0.5, ease: 'power2.out' });
+// ── 2. HERO — 시네마틱 입장 + 패럴랙스 ──
+const heroTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
+heroTL
+  .from('.hero-tag', { y: 40, opacity: 0, duration: 0.8 })
+  .from('.hero-name', { y: 60, opacity: 0, duration: 1, clipPath: 'inset(100% 0 0 0)' }, '-=0.5')
+  .to('.hero-name', { clipPath: 'inset(0% 0 0 0)', duration: 0.8 }, '-=0.8')
+  .from('.hero-desc', { y: 30, opacity: 0, duration: 0.7 }, '-=0.4')
+  .from('.hero-bottom', { y: 20, opacity: 0, duration: 0.5 }, '-=0.3');
 
-// Counter (숫자 카운트업 — 스크롤 시 한 번)
-document.querySelectorAll('.counter').forEach(el => {
-  const target = parseFloat(el.dataset.target);
-  const isDecimal = el.dataset.decimal === 'true';
-  el.textContent = isDecimal ? target.toFixed(1) : target;
+// Hero 패럴랙스
+gsap.to('.hero-name', {
+  y: -80,
+  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+});
+gsap.to('.hero-desc', {
+  y: -40,
+  scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: 1 }
+});
+gsap.to('.hero-tag', {
+  y: -20, opacity: 0,
+  scrollTrigger: { trigger: '.hero', start: 'center center', end: 'bottom top', scrub: 1 }
 });
 
-// Metric bar fill (스크롤 시 그래프 채워짐)
-const metricBars = document.querySelectorAll('.metric-bar-fill');
-const barObserver = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('animated');
-      barObserver.unobserve(e.target);
-    }
+// ── 3. METRICS — 카운트업 + 바 ──
+document.querySelectorAll('.counter').forEach(el => {
+  const target = parseFloat(el.dataset.target);
+  const obj = { val: 0 };
+  el.textContent = '0';
+  gsap.to(obj, {
+    val: target, duration: 2, ease: 'power2.out',
+    scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+    onUpdate: () => { el.textContent = Math.round(obj.val); }
   });
-}, { threshold: 0.3 });
-metricBars.forEach(bar => barObserver.observe(bar));
+});
 
-// Card hover 3D tilt (인터랙션만, 등장 애니메이션 없음)
+gsap.from('.metric', {
+  y: 50, opacity: 0, duration: 0.7,
+  stagger: { each: 0.12, from: 'start' },
+  ease: 'power2.out',
+  scrollTrigger: { trigger: '.metrics', start: 'top 80%', once: true }
+});
+
+document.querySelectorAll('.metric-bar-fill').forEach(bar => {
+  const fill = bar.style.getPropertyValue('--fill');
+  bar.style.width = '0%';
+  gsap.to(bar, {
+    width: fill, duration: 1.5, ease: 'power2.out',
+    scrollTrigger: { trigger: bar, start: 'top 85%', once: true }
+  });
+});
+
+// ── 4. GARNET SECTION ──
+const garnetTL = gsap.timeline({
+  scrollTrigger: { trigger: '.garnet-section', start: 'top 80%', once: true }
+});
+garnetTL
+  .from('.garnet-section .section-label', { x: -30, opacity: 0, duration: 0.6 })
+  .from('.garnet-section .proj-role', { x: -20, opacity: 0, duration: 0.5 }, '-=0.3')
+  .from('.garnet-section .proj-name', { y: 40, opacity: 0, duration: 0.8, ease: 'power3.out' }, '-=0.3')
+  .from('.garnet-section .proj-desc', { y: 20, opacity: 0, duration: 0.6 }, '-=0.4')
+  .from('.garnet-section .proj-stats > *', { y: 20, opacity: 0, duration: 0.5, stagger: 0.1 }, '-=0.3')
+  .from('.garnet-section-link', { opacity: 0, duration: 0.4 }, '-=0.2')
+  .from('.garnet-mockup', { x: 60, opacity: 0, rotateY: -8, transformPerspective: 800, duration: 1, ease: 'power3.out' }, '-=0.8');
+
+// ── 5. PROJECTS ──
+gsap.from('#projects .section-label', { x: -30, opacity: 0, duration: 0.6, scrollTrigger: { trigger: '#projects', start: 'top 80%', once: true } });
+gsap.from('#projects .section-title', { y: 40, opacity: 0, duration: 0.8, scrollTrigger: { trigger: '#projects', start: 'top 75%', once: true } });
+gsap.from('.proj-grid:not(.proj-grid-2col) .proj-card', { y: 60, opacity: 0, scale: 0.96, duration: 0.7, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: '.proj-grid', start: 'top 80%', once: true } });
+gsap.from('.proj-grid-2col .proj-card', { y: 60, opacity: 0, scale: 0.96, duration: 0.7, stagger: 0.15, ease: 'power3.out', scrollTrigger: { trigger: '.proj-grid-2col', start: 'top 80%', once: true } });
+
+// Card hover 3D tilt
 document.querySelectorAll('.proj-card, .proj-featured').forEach(el => {
   el.addEventListener('mousemove', e => {
     const r = el.getBoundingClientRect();
     const x = (e.clientX - r.left) / r.width - 0.5;
     const y = (e.clientY - r.top) / r.height - 0.5;
-    gsap.to(el, { rotateY: x * 4, rotateX: -y * 4, transformPerspective: 900, duration: 0.3, ease: 'power2.out' });
+    gsap.to(el, { rotateY: x * 6, rotateX: -y * 6, transformPerspective: 800, duration: 0.3, ease: 'power2.out' });
   });
   el.addEventListener('mouseleave', () => {
     gsap.to(el, { rotateY: 0, rotateX: 0, duration: 0.5, ease: 'power2.out' });
   });
 });
 
-// Smooth scroll
+// ── 6. STORY ──
+gsap.from('#story .section-label', { x: -30, opacity: 0, duration: 0.6, scrollTrigger: { trigger: '#story', start: 'top 80%', once: true } });
+gsap.from('.timeline-item', { x: -40, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out', scrollTrigger: { trigger: '.timeline', start: 'top 80%', once: true } });
+gsap.from('.story-headline', { y: 50, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: '.story-headline', start: 'top 80%', once: true } });
+gsap.from('.story-body p', { y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out', scrollTrigger: { trigger: '.story-body', start: 'top 80%', once: true } });
+gsap.from('.story-highlight', { x: -30, opacity: 0, duration: 0.7, ease: 'power2.out', scrollTrigger: { trigger: '.story-highlight', start: 'top 85%', once: true } });
+
+// ── 7. SKILLS ──
+gsap.from('.skills-grid > div', { y: 40, opacity: 0, duration: 0.6, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.skills-grid', start: 'top 80%', once: true } });
+
+// ── 8. VISION ──
+gsap.from('.vision-headline', { y: 60, opacity: 0, duration: 1, ease: 'power3.out', scrollTrigger: { trigger: '.vision-headline', start: 'top 80%', once: true } });
+gsap.from('.vision-quote', { x: -40, opacity: 0, duration: 0.8, ease: 'power2.out', scrollTrigger: { trigger: '.vision-quote', start: 'top 85%', once: true } });
+gsap.from('.vision-item', { y: 30, opacity: 0, duration: 0.6, stagger: 0.2, ease: 'power2.out', scrollTrigger: { trigger: '.vision-item', start: 'top 90%', once: true } });
+
+// ── 9. CONTACT ──
+gsap.from('.contact-headline', { y: 50, opacity: 0, duration: 0.9, ease: 'power3.out', scrollTrigger: { trigger: '#contact', start: 'top 75%', once: true } });
+gsap.from('.contact-row', { y: 20, opacity: 0, duration: 0.5, stagger: 0.15, ease: 'power2.out', scrollTrigger: { trigger: '.contact-row', start: 'top 85%', once: true } });
+gsap.from('.contact-btn', { y: 20, opacity: 0, duration: 0.5, scrollTrigger: { trigger: '.contact-btn', start: 'top 90%', once: true } });
+
+// ── 10. DIVIDERS ──
+document.querySelectorAll('.divider').forEach(d => {
+  gsap.from(d, { scaleX: 0, transformOrigin: 'left center', duration: 1, ease: 'power2.inOut', scrollTrigger: { trigger: d, start: 'top 85%', once: true } });
+});
+
+// ── 11. SMOOTH SCROLL ──
 document.querySelectorAll('a[href^="#"]').forEach(link => {
   link.addEventListener('click', e => {
     const t = document.querySelector(link.getAttribute('href'));
-    if (t) { e.preventDefault(); gsap.to(window, { scrollTo: { y: t, offsetY: 80 }, duration: 0.8, ease: 'power2.inOut' }); }
+    if (t) { e.preventDefault(); gsap.to(window, { scrollTo: { y: t, offsetY: 80 }, duration: 1, ease: 'power3.inOut' }); }
   });
 });
 
-// Garnet tabs auto-cycle
+// ── 12. GARNET TABS ──
 (function() {
   const tabs = document.querySelectorAll('.g-tab');
   const screens = document.querySelectorAll('.g-screen');
@@ -820,6 +897,9 @@ document.querySelectorAll('a[href^="#"]').forEach(link => {
     obs.observe(m);
   }
 })();
+
+// ── 13. FOOTER ──
+gsap.from('footer', { y: 20, opacity: 0, duration: 0.5, scrollTrigger: { trigger: 'footer', start: 'top 95%', once: true } });
 </script>
 </body>
 </html>
