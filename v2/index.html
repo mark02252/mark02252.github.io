@@ -216,7 +216,11 @@
       min-height: 320px; position: relative; overflow: hidden;
     }
 
-    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+    .proj-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; align-items: stretch; }
+    .proj-grid > .proj-card { display: flex; flex-direction: column; }
+    .proj-grid > .proj-card .proj-desc { flex: 1; }
+    .proj-grid-2col > .proj-card { display: flex; flex-direction: column; }
+    .proj-grid-2col > .proj-card .proj-desc { flex: 1; }
     .proj-grid-2col { grid-template-columns: repeat(2, 1fr); }
     .proj-card {
       padding: 40px 32px;
